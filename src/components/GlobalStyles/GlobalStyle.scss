@@ -1,0 +1,24 @@
+ @import 'normalize.css';
+ @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Roboto:wght@300&display=swap');
+
+ :root{
+    ---primary:#55833D
+
+
+ }
+//giup cho do tinh toan wwight hight khi co boder hay padding
+ *{
+    box-sizing: border-box;
+ }
+ html{
+    font-size: 62.5%;
+
+ }
+ body{
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-style: normal;
+    font-size: 1.6rem;
+    line-height: 1.5;
+
+
+ }
