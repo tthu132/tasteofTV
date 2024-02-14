@@ -1,20 +1,29 @@
  @import 'normalize.css';
  @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Roboto:wght@300&display=swap');
 
- :root{
-    ---primary:#55833D
+ :root {
+    ---primary: #55833D;
+    //defaultLayout
+    --default-layout-height: 60px;
+    --default-layout-wight: 1062px;
+
 
 
  }
-//giup cho do tinh toan wwight hight khi co boder hay padding
- *{
+
+ //giup cho do tinh toan wwight hight khi co boder hay padding
+ * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
  }
- html{
+
+ html {
     font-size: 62.5%;
 
  }
- body{
+
+ body {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-style: normal;
     font-size: 1.6rem;

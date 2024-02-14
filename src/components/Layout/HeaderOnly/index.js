@@ -8,7 +8,7 @@ function HeaderOnly({ children }) {
             <div className="container">
                 {children}
             </div>
-            <Footer/>
+            <Footer />
 
 
         </div>
