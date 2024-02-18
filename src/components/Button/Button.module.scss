@@ -1,0 +1,58 @@
+.wrapper {
+    // min-width: 100%;
+    padding: 9px 16px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+
+
+
+    +.wrapper {
+        margin-left: 8px;
+    }
+
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+}
+
+.buttonLogin {
+    width: 120px !important;
+}
+
+.buttonProfile,
+.buttonLogout {
+    width: 150px;
+}
+
+.buttonLogin,
+.buttonProfile {
+    background-color: rgb(254, 44, 85) !important;
+    border: 2px solid rgb(254, 44, 85);
+    color: white !important;
+
+    align-items: center;
+
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+    }
+
+}
+
+.btnRegister,
+.buttonLogout {
+    background-color: white;
+    border: 2px solid rgb(254, 44, 85);
+    align-items: center;
+
+    &:hover {
+        color: white;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+    }
+}
