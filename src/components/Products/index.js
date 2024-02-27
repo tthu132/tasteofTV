@@ -13,8 +13,8 @@ function Products({ data }) {
     return (
 
         <Link to={`/product/${encodeURIComponent(data.full_name)}`}>
-            <Images src={data.avatar} Product></Images>
-            <p>{data.full_name}</p>
+            <Images src={data.image} Product></Images>
+            <p>{data.name}</p>
             <h4>{formatCurrency(data.price)}</h4>
         </Link>
 
