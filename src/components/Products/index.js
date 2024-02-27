@@ -6,11 +6,16 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles)
 
 function Products({ data }) {
+    console.log('dataaaaaa', data.full_name);
+    function formatCurrency(number) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+    }
     return (
 
-        <Link to={`/@${data.nickname}`}>
-            <Images src={data.avatar}></Images>
+        <Link to={`/product/${encodeURIComponent(data.full_name)}`}>
+            <Images src={data.avatar} Product></Images>
             <p>{data.full_name}</p>
+            <h4>{formatCurrency(data.price)}</h4>
         </Link>
 
 

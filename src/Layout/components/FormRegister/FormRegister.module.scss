@@ -1,0 +1,80 @@
+.wrapper {
+    // background-color: red;
+    // height: 100px;
+    // width: 100px;
+    position: relative;
+
+}
+
+.formDN {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    z-index: 999
+}
+
+.inner {
+
+    display: flex;
+    width: 600px;
+    background: rgb(255, 255, 255);
+    padding: 70px;
+    flex-direction: column;
+    border-radius: 8px;
+
+    input {
+        width: 100%;
+        padding: 10px 10px 10px 0;
+        border: none;
+        font-size: 18px;
+        border-bottom: 1px solid rgb(228, 220, 220);
+
+        &:focus {
+            border-bottom: 2px solid var(---primary);
+            transition: border-bottom 0.3s ease;
+        }
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .input {
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+}
+
+.span {
+    margin-top: 30px;
+
+    p {
+        &:hover {
+            color: var(---primary);
+            cursor: pointer;
+        }
+    }
+
+    span {
+        font-weight: 600;
+        color: var(---primary);
+    }
+}
+
+.input-password {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 70px;
+}

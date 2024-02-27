@@ -1,0 +1,51 @@
+.activeHomee {
+    background-color: #8CC342;
+
+
+
+    span {
+        color: white;
+    }
+
+}
+
+.activeHome {
+    span {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.menuAccountItem {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    color: #333;
+
+}
+
+
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.active {
+    background-color: rgba(22, 24, 35, 0.06);
+
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.09);
+    }
+}
+
+.icon {
+    margin: 0 25px;
+}
+
+.menuAccount {
+    justify-content: flex-start !important;
+}

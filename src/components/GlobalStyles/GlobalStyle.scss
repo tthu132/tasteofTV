@@ -1,10 +1,12 @@
  @import 'normalize.css';
  @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Roboto:wght@300&display=swap');
+ @import "slick-carousel/slick/slick.css";
+ @import "slick-carousel/slick/slick-theme.css";
 
  :root {
     ---primary: #55833D;
     //defaultLayout
-    --default-layout-height: 70px;
+    --default-layout-height: 80px;
     --default-layout-wight: 1100px;
 
     --text-color: #333

@@ -3,14 +3,31 @@ import ReactDOM from 'react-dom/client';
 import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import GloabalStyles from './components/GlobalStyles';
+import { store } from './redux/store';
+import { Provider } from 'react-redux'
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <GloabalStyles>
-      <App/>
-    </GloabalStyles>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <GloabalStyles>
+        <App />
+      </GloabalStyles>
+    </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

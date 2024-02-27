@@ -1,0 +1,70 @@
+.item-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    input {
+        padding: 8px;
+
+        border: none;
+        border-bottom: 1px solid gray;
+        font-size: 18px;
+        transition: all .5s ease-out;
+        cursor: pointer;
+        width: 100%;
+
+        background-color: transparent;
+
+    }
+
+    .icon {
+        position: absolute;
+        right: 0;
+
+    }
+
+
+    input:focus {
+        border-bottom: 2px solid #55833D;
+        // background-color: #cde7be;
+
+    }
+
+    .input-group {
+        width: 300px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+
+        &.ant-upload-list {
+            display: none;
+        }
+
+    }
+}
+
+.wraper {
+    padding: 20px;
+
+    border-radius: 8px;
+
+    h2 {
+        padding: 0 0 17px 0;
+    }
+}
+
+.inner {
+    background-color: #F5F5FA;
+    padding: 20px;
+    width: 100%;
+}

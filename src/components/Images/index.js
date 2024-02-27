@@ -1,11 +1,19 @@
 import styles from './Images.module.scss'
-
+import classNames from 'classnames/bind';
 import { forwardRef, useState } from 'react'
 import image from '~/images'
 
-console.log(image.noImages);
 
-function Images({ src, ...props }) {
+const cx = classNames.bind(styles)
+
+function Images({ ItemCategory, Product, Avatar, src, ...props }) {
+    const classes = cx('wrapper', {
+        Product,
+        ItemCategory,
+        Avatar
+
+    })
+
 
     const [fallback, setFallback] = useState('')
 
@@ -14,7 +22,7 @@ function Images({ src, ...props }) {
     }
 
     return (
-        <img {...props} src={fallback || src} onError={handleErro}></img>
+        <img loading="lazy" className={classes} {...props} src={fallback || src} onError={handleErro}></img>
     );
 }
 

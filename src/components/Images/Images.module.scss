@@ -4,3 +4,25 @@
     object-fit: cover;
     border: 50%;
 }
+
+.wrapper {
+    width: 100%;
+}
+
+.Product {
+    width: 100%;
+}
+
+.ItemCategory {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.Avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 999px;
+    padding: 10px;
+    border: 2px solid #99b689;
+}

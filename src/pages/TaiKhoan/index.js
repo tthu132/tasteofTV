@@ -1,6 +1,7 @@
+import ThongTinTaiKhoan from "./ThongTinTaiKhoan";
 function TaiKhoan() {
-    return (  
-        <div>TaiKhoan</div>
+    return (
+        <ThongTinTaiKhoan></ThongTinTaiKhoan>
     );
 }
 

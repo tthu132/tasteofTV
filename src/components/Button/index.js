@@ -3,21 +3,42 @@ import styles from './Button.module.scss'
 import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles)
-function Button({ to, href, onClick, children, buttonLogin, btnRegister, disabled, rounded, buttonProfile, buttonLogout }) {
+function Button({ to,
+    href,
+    onClick,
+    btnQuality,
+    btnControl,
+    children,
+    btnAdd,
+    btnDetail,
+    btnCategory,
+    buttonLogin,
+    btnRegister,
+    disabled,
+    rounded,
+    buttonProfile,
+    buttonLogout, buttonLoginFrom, btnEye, upDate }) {
 
     let Comp = 'button'
     const classes = cx('wrapper', {
         buttonLogin,
-        disabled,
+
         rounded,
         disabled,
         btnRegister,
         buttonProfile,
-        buttonLogout
+        buttonLogout,
+        btnCategory,
+        btnAdd,
+        btnDetail,
+        btnQuality,
+        btnControl,
+        buttonLoginFrom,
+        btnEye, upDate
     })
 
     const props = {
-        onclick,
+        onClick,
 
 
     }

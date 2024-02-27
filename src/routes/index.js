@@ -5,8 +5,12 @@ import TinTuc from '~/pages/TinTuc';
 import TaiKhoan from '~/pages/TaiKhoan';
 import Search from '~/pages/Search';
 import ChiTietSanPham from '~/pages/ChiTietSanPham';
+import DangNhap from '~/pages/DangNhap';
+import DangKy from '~/pages/DangKy';
+import ThongTinTaiKhoan from '~/pages/TaiKhoan/ThongTinTaiKhoan';
+import QuanLyDonHang from '~/pages/TaiKhoan/QuanLyDonHang';
 
-import { HeaderOnly } from '~/components/Layout';
+import { HeaderOnly } from '~/Layout';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -15,8 +19,13 @@ const publicRoutes = [
     { path: '/tintuc', component: TinTuc },
     { path: '/taikhoan', component: TaiKhoan, layout: HeaderOnly },
     { path: '/search', component: Search, layout: null },
-    { path: '/:nickname', component: ChiTietSanPham, layout: null }
+    { path: '/product/:full_name', component: ChiTietSanPham },
+    { path: '/login', component: DangNhap, layout: null },
+    { path: '/register', component: DangKy, layout: null },
 
+
+    { path: '/taikhoan/edit', component: ThongTinTaiKhoan, layout: HeaderOnly },
+    { path: '/taikhoan/donhang', component: QuanLyDonHang, layout: HeaderOnly },
 
 
 
