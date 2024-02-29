@@ -17,12 +17,12 @@ function Button({ to,
     disabled,
     rounded,
     buttonProfile,
-    buttonLogout, buttonLoginFrom, btnEye, upDate }) {
+    buttonLogout, buttonLoginFrom, btnEye, upDate, Plus }) {
 
     let Comp = 'button'
     const classes = cx('wrapper', {
         buttonLogin,
-
+        Plus,
         rounded,
         disabled,
         btnRegister,

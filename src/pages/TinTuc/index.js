@@ -1,5 +1,5 @@
 function TinTuc() {
-    return (  
+    return (
         <div>TinTuc</div>
     );
 }

@@ -9,6 +9,7 @@ import DangNhap from '~/pages/DangNhap';
 import DangKy from '~/pages/DangKy';
 import ThongTinTaiKhoan from '~/pages/TaiKhoan/ThongTinTaiKhoan';
 import QuanLyDonHang from '~/pages/TaiKhoan/QuanLyDonHang';
+import Admin from '~/pages/Admin';
 
 import { HeaderOnly } from '~/Layout';
 
@@ -29,9 +30,9 @@ const publicRoutes = [
 
 
 
-
 ]
 const privateRoute = [
+    { path: '/admin', component: Admin, layout: null },
 
 ]
 

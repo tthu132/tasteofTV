@@ -156,7 +156,7 @@ function ThongTinTaiKhoan() {
                             </Upload>
                             {
                                 avatar && (
-                                    <Images Avatar src={currentUser.avatar}></Images>
+                                    <Images Avatar src={currentUser.avatar || avatar}></Images>
                                 )
                             }
 

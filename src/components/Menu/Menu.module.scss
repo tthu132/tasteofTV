@@ -30,6 +30,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    width: 100%;
+
+
+
 }
 
 
@@ -42,10 +47,34 @@
     }
 }
 
-.icon {
-    margin: 0 25px;
+.activeAdmin {
+    background-color: rgba(140, 195, 66, 15%);
+    border-right: 3px solid rgba(140, 195, 66, 30%);
+
+    &:hover {
+        background-color: rgba(140, 195, 66, 15%);
+    }
+
+    .icon-admin {
+        color: rgba(140, 195, 66, 100%);
+    }
+}
+
+.icon,
+.icon-admin {
+    padding: 20px;
 }
 
 .menuAccount {
     justify-content: flex-start !important;
+
+}
+
+.admin:hover {
+    background-color: rgba(140, 195, 66, 5%)
+}
+
+.admin:hover .icon {
+    // background-color: rgba(22, 24, 35, 0.03);
+
 }

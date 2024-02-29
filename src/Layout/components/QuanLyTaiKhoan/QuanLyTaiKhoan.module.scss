@@ -1,0 +1,22 @@
+.icon-plus {
+    font-size: 50px;
+    background-color: transparent;
+    color: rgba(22, 24, 35, 0.2);
+    padding: 30px;
+}
+
+.icon-plus:hover {
+    color: gray;
+}
+
+.wrapper-icon:hover span {
+    color: gray;
+}
+
+.wrapper {
+    padding: 0 30px;
+}
+
+.row{
+    background-color: red;
+}

@@ -14,17 +14,21 @@ import * as UserSevice from '~/services/UserService'
 
 import { jwtDecode } from "jwt-decode";
 import { updateUser } from '~/redux/slice/userSlide';
+import NotFoundPage from '~/pages/NotFoundPage';
+
 
 
 function App() {
   const count = useSelector((state) => state.counter.value)
+  const user = useSelector((state) => state.user)
+  console.log('user admin ', user.isAdmin);
   const dispatch = useDispatch()
 
   useEffect(() => {
 
     const { storgeData, decoded } = handleDecoded()
 
-    console.log('store:  ', storgeData,decoded);
+    console.log('store:  ', storgeData, decoded);
 
     if (decoded?.id)
       handleGetDetailUser(decoded?.id, storgeData)
@@ -48,16 +52,7 @@ function App() {
 
     if (decoded?.exp < currentTime.getTime() / 1000) {
       const data = await UserSevice.refreshToken()
-
-      console.log('dataaaaaaaaa', data);
       config.headers['token'] = `Bearer ${data?.access_token}`
-
-      console.log('data access token ', data?.access_token);
-
-
-      console.log('config ', config);
-      console.log('doceded exp ', decoded?.exp, currentTime.getTime() / 1000);
-
     }
     return config;
   }, (error) => {
@@ -65,24 +60,12 @@ function App() {
     return Promise.reject(error);
   });
 
-
   const handleGetDetailUser = async (id, token) => {
 
     const res = await UserSevice.getDetailsUser(id, token)
     dispatch(updateUser({ ...res?.data, access_token: token }))
 
   }
-
-  // const fetchApi = async () => {
-
-  //   const res = await axios.get(`${process.env.REACT_APP_API_KEY}/product/get-all`)
-
-  //   console.log('resss ', res);
-  //   return res.data
-  // }
-  // const info = useQuery({ queryKey: ['todos'], queryFn: fetchApi })
-  // console.log('data query: ', info);
-
 
   return (
     <Router>
@@ -103,24 +86,22 @@ function App() {
 
           })}
 
+          {user.isAdmin && privateRoute.map((route, index) => {
+            const Page = route.component
+
+            let Layout = DefaultLayout
+            if (route.layout) Layout = route.layout
+            else if (route.layout === null) Layout = Fragment
+
+            return <Route key={index} path={route.path} element={
+              <Layout>
+                <Page />
+              </Layout>
+            } />
+
+          })}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
-
-
-        {/* <div>
-          <button
-            aria-label="Increment value"
-            onClick={() => dispatch(increment())}
-          >
-            Increment
-          </button>
-          <span>{count}</span>
-          <button
-            aria-label="Decrement value"
-            onClick={() => dispatch(decrement())}
-          >
-            Decrement
-          </button>
-        </div> */}
 
       </div>
     </Router>

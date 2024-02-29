@@ -79,3 +79,26 @@
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0);
  }
+
+
+
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-form-item .ant-form-item-label {
+    flex-grow: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: start;
+    vertical-align: middle;
+ }
+
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-modal .ant-modal-footer>.ant-btn+.ant-btn {
+    margin-inline-start: 8px;
+    display: none;
+ }
+
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+    color: rgba(140, 195, 66, 100%);
+    border-color: rgba(140, 195, 66, 100%);
+    background: #ffffff;
+    background-color: rgba(140, 195, 66, 11%);
+
+ }

@@ -6,11 +6,11 @@ import image from '~/images'
 
 const cx = classNames.bind(styles)
 
-function Images({ ItemCategory, Product, Avatar, src, ...props }) {
+function Images({ ItemCategory, Product, Avatar, ProductAdmin, src, ...props }) {
     const classes = cx('wrapper', {
         Product,
         ItemCategory,
-        Avatar
+        Avatar, ProductAdmin
 
     })
 
