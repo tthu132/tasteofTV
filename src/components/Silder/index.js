@@ -17,7 +17,7 @@ function SliderComponent({ arrImages }) {
         <Slider {...settings}>
             {arrImages.map((item, index) => {
                 return (
-                    <Images src={item} key={index} preview={false}></Images>
+                    <Images src={item} key={index}></Images>
                 )
             })}
         </Slider>

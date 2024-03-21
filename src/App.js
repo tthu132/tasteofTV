@@ -33,7 +33,16 @@ function App() {
     if (decoded?.id)
       handleGetDetailUser(decoded?.id, storgeData)
 
+    // window.addEventListener('unload', handleUnload);
+
+    // return () => {
+    //   window.removeEventListener('unload', handleUnload);
+    // };
+
   }, [])
+  // const handleUnload = () => {
+  //   localStorage.removeItem('access_token');
+  // };
 
   const handleDecoded = () => {
     let storgeData = localStorage.getItem('access_token')

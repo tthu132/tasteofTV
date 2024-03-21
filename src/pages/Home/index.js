@@ -52,7 +52,7 @@ function Home() {
             <BoxCategory item={titleCategory}>
                 {arrCategogy.map((item, index) => {
                     return (
-                        <ItemCategory data={item}></ItemCategory>
+                        <ItemCategory key={index} data={item}></ItemCategory>
 
                     )
                 })}
