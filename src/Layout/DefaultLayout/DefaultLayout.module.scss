@@ -4,3 +4,17 @@
     align-items: center;
 
 }
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    /* Màu nền của header */
+    z-index: 1000;
+}
+
+.content {
+    margin-top: 100px;
+}

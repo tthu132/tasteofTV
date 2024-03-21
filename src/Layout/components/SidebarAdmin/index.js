@@ -35,6 +35,14 @@ function SidebarAdmin({ handleMenuClick }) {
             menuAccount
             onClick={handleClick}
             icon={faUser}
+            title='Thống kê'
+            activeMenu={activeMenu}
+          >
+          </MenuAdmin>
+          <MenuAdmin
+            menuAccount
+            onClick={handleClick}
+            icon={faUser}
             title='Quản lý tài khoản'
             activeMenu={activeMenu}
           >
@@ -46,6 +54,15 @@ function SidebarAdmin({ handleMenuClick }) {
             onClick={handleClick}
             icon={faTableCells}
             title='Quản lý sản phẩm' >
+
+          </MenuAdmin>
+          <MenuAdmin
+            activeMenu={activeMenu}
+
+            menuAccount
+            onClick={handleClick}
+            icon={faTableCells}
+            title='Quản lý Blog' >
 
           </MenuAdmin>
           <MenuAdmin

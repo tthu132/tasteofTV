@@ -7,6 +7,11 @@ import CardProduct from "~/components/CardProduct";
 import ItemCategory from "~/components/ItemCategory";
 import * as ProductService from '~/services/ProductService'
 import { useQuery } from '@tanstack/react-query'
+import { BackTop } from 'antd';
+
+import * as ProductCategoryService from '~/services/ProductCatogoryService '
+import { useState } from "react";
+import Loading from "~/components/Loading";
 
 
 
@@ -14,13 +19,25 @@ import { useQuery } from '@tanstack/react-query'
 const cx = classNames.bind(styles)
 function Home() {
 
-    const fetchProductAll = async () => {
-        const res = await ProductService.getAllProduct()
+    const [limit, setLimit] = useState(6)
+
+    const fetchProductAll = async (context) => {
+
+        const limit = context?.queryKey && context?.queryKey[1]
+        console.log('limit 1 ', limit);
+        const res = await ProductService.getAllProduct(null, limit)
         return res
     }
+    const fetchCatoAll = async () => {
+        const res = await ProductCategoryService.getAllProductCatogory()
+        console.log('rescato ', res.data);
+        return res.data
+    }
 
-    const { isLoading, data } = useQuery({ queryKey: ['product'], queryFn: fetchProductAll, retry: 3, retryDelay: 1000 })
-    console.log('data tu query ', data);
+    const { isPending, data, isPreviousData, } = useQuery({ queryKey: ['product', limit], queryFn: fetchProductAll, retry: 3, retryDelay: 1000, keepPreviousData: true })
+    const { isPending: isPendingCato, data: dataCato } = useQuery({ queryKey: ['catogory'], queryFn: fetchCatoAll, retry: 3, retryDelay: 1000 })
+
+    console.log('total ', data);
     const arrCategogy = [
         { title: 'Sản Phẩm Chế Biến', src: '/sanphamchebien', imageCategory: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
         { title: 'Nông Sản', src: '/nongsan', imageCategory: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' }
@@ -30,26 +47,24 @@ function Home() {
         src: '/',
         arrCategogy
     }
-    const listProduct = [
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
-        { full_name: 'Dừa sáp', price: 79000, avatar: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' }
-    ]
-    console.log('arr category: ', titleCategory.arrCategogy.imageCategory);
-    console.log('arr category: ', titleCategory.arrCategogy);
 
+
+    const handleLoadMore = () => {
+        setLimit(prevLimit => prevLimit + 6);
+    };
 
     return (
-        <div className={cx('wrapper')} >
-            <div>Home</div>
-            <SliderComponent arrImages={[...images.slider]}></SliderComponent>
+        <Loading isLoading={isPending}>
+            <div className={cx('wrapper')} >
+                <div>
+                    <BackTop />
 
-            <BoxCategory item={titleCategory}>
+
+                </div>
+                <div>Home</div>
+                <SliderComponent arrImages={[...images.slider]}></SliderComponent>
+
+                {/* <BoxCategory item={titleCategory}>
                 {arrCategogy.map((item, index) => {
                     return (
                         <ItemCategory key={index} data={item}></ItemCategory>
@@ -57,22 +72,34 @@ function Home() {
                     )
                 })}
 
-            </BoxCategory>
+            </BoxCategory> */}
 
-            {arrCategogy.map((item, index) => {
-                return (
-                    <BoxCategory item={item} key={index}>
-                        {data && data.data.map((item, index) => {
-                            return (
-                                <CardProduct listProduct={item} key={index}></CardProduct>
-                            )
-                        })}
+                {dataCato && dataCato.map((item, index) => {
+                    return (
 
-                    </BoxCategory>
-                )
-            })}
+                        <BoxCategory
+                            onLoadMore={handleLoadMore}
+                            item={item}
+                            key={index}
+                            isLoading={isPending}
+                            check={data?.total === data?.data?.length}
+                        >
+                            {data && data.data.map((item, index) => {
+                                return (
+                                    <CardProduct
+                                      
+                                        listProduct={item}
+                                        key={index}></CardProduct>
+                                )
+                            })}
 
-        </div>
+                        </BoxCategory>
+
+                    )
+                })}
+
+            </div>
+        </Loading>
     );
 }
 

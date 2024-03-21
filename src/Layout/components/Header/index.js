@@ -29,14 +29,13 @@ const cx = classNames.bind(styles)
 
 function Header() {
   const currentUser = useSelector((state) => state.user)
-
+  const order = useSelector((state) => state.order)
 
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [hoverUser, setHoverUser] = useState(false)
   const [showFormLogin, setShowFormLogin] = useState(false)
   const [showFormRegister, setShowFormRegister] = useState(false)
-
 
 
   const dispatch = useDispatch()
@@ -83,9 +82,9 @@ function Header() {
           <Link to='/'><img src={logo}></img></Link>
           <Search></Search>
 
-          <button onClick={() => setShowFormLogin(true)}>Show</button>
+          {/* <button onClick={() => setShowFormLogin(true)}>Show</button> */}
 
-          {showFormLogin && <div className={cx('overlay')} >
+          {/* {showFormLogin && <div className={cx('overlay')} >
 
             <FormLogin
               className={cx('formDN')}
@@ -95,9 +94,9 @@ function Header() {
             </FormLogin>
 
 
-          </div>}
+          </div>} */}
 
-          {showFormRegister && <div className={cx('overlay')} >
+          {/* {showFormRegister && <div className={cx('overlay')} >
 
             <FormRegister
               className={cx('formDN')}
@@ -106,7 +105,7 @@ function Header() {
 
             </FormRegister>
 
-          </div>}
+          </div>} */}
 
         </div>
 
@@ -120,8 +119,8 @@ function Header() {
               <button><FontAwesomeIcon className={cx('icon')} icon={faHeart} /></button>
               <p>Yêu Thích</p>
             </li>
-            <li>
-              <Badge count={4} style={{ position: 'absolute', right: '5px', top: '10px' }}>
+            <li onClick={() => navigate('/order')}>
+              <Badge count={order?.orderItems?.length} style={{ position: 'absolute', right: '5px', top: '10px' }}>
                 <button><FontAwesomeIcon className={cx('icon')} icon={faCartShopping} /></button>
               </Badge>
               <p>Giỏ Hàng</p>
@@ -220,7 +219,9 @@ function Header() {
                                     <Button
                                       className={cx('icon', 'login')}
                                       buttonLogin
-                                      onClick={() => (setShowFormLogin(true), setHoverUser(false))}
+                                      onClick={() => navigate('/login')}
+                                    // onClick={() => (setShowFormLogin(true), setHoverUser(false))}
+
                                     >Đăng Nhập</Button>
                                   </div>
 
@@ -229,6 +230,7 @@ function Header() {
                                   <div>
                                     <p>Đăng kí thành viên</p>
                                     <Button
+                                      onClick={() => navigate('/register')}
                                       className={cx('icon', 'register')}
 
                                       btnRegister>Đăng Ký</Button>

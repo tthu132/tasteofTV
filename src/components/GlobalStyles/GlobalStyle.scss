@@ -92,7 +92,7 @@
 
  :where(.css-dev-only-do-not-override-1xg9z9n).ant-modal .ant-modal-footer>.ant-btn+.ant-btn {
     margin-inline-start: 8px;
-    display: none;
+    //  display: none;
  }
 
  :where(.css-dev-only-do-not-override-1xg9z9n).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
@@ -103,3 +103,10 @@
 
  }
 
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-back-top .ant-back-top-content {
+    background-color: rgba(140, 195, 66, 100%);
+
+    &:hover {
+       background-color: #55833D;
+    }
+ }

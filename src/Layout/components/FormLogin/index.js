@@ -70,9 +70,6 @@ function FormLogin({ formDN, handleCloseForm, openRegister }) {
             password: pass
         })
 
-        // console.log('email :', email);
-        // console.log('pass :', pass);
-
     }
 
 

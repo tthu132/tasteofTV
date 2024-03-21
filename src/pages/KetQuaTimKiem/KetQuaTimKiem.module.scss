@@ -1,0 +1,10 @@
+.inner {
+    // background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.wrapper {
+    width: var(--default-layout-wight);
+    min-height: 800px;
+}

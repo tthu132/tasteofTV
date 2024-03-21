@@ -10,6 +10,9 @@ import DangKy from '~/pages/DangKy';
 import ThongTinTaiKhoan from '~/pages/TaiKhoan/ThongTinTaiKhoan';
 import QuanLyDonHang from '~/pages/TaiKhoan/QuanLyDonHang';
 import Admin from '~/pages/Admin';
+import KetQuaTimKiem from '~/pages/KetQuaTimKiem';
+import ProductType from '~/pages/ProductType';
+import OrderPage from '~/pages/OderPage';
 
 import { HeaderOnly } from '~/Layout';
 
@@ -20,9 +23,15 @@ const publicRoutes = [
     { path: '/tintuc', component: TinTuc },
     { path: '/taikhoan', component: TaiKhoan, layout: HeaderOnly },
     { path: '/search', component: Search, layout: null },
-    { path: '/product/:full_name', component: ChiTietSanPham },
+    { path: '/product/:id', component: ChiTietSanPham },
     { path: '/login', component: DangNhap, layout: null },
     { path: '/register', component: DangKy, layout: null },
+    { path: '/ketquatimkiem/:key', component: KetQuaTimKiem },
+    { path: '/type/:key', component: ProductType },
+    { path: '/order', component: OrderPage },
+
+
+
 
 
     { path: '/taikhoan/edit', component: ThongTinTaiKhoan, layout: HeaderOnly },

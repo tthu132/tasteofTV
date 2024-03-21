@@ -6,6 +6,12 @@
     background-color: #55833D;
 
 
+    position: sticky;
+    top: 80px;
+    // position: relative;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    /* X, Y, Blur, Spread, Color */
 
 
 }

@@ -5,6 +5,14 @@
     display: flex;
     justify-content: center;
 
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    /* Màu nền của header */
+    z-index: 1000;
+
+
 }
 
 .inner {

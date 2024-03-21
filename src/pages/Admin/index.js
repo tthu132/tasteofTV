@@ -3,6 +3,8 @@ import classNames from 'classnames/bind';
 import SidebarAdmin from '~/Layout/components/SidebarAdmin';
 import QuanLyTaiKhoan from '~/Layout/components/QuanLyTaiKhoan';
 import QuanLySanPham from '~/Layout/components/QuanLySanPham';
+import QuanLyBlog from '~/Layout/components/QuanLyBlog';
+import ThongKe from '~/Layout/components/ThongKe';
 import { useState } from 'react';
 import Header from '~/Layout/components/Header';
 
@@ -22,6 +24,10 @@ function Admin() {
                 return <QuanLyTaiKhoan />;
             case 'Quản lý sản phẩm':
                 return <QuanLySanPham />;
+            case 'Quản lý Blog':
+                return <QuanLyBlog />;
+            case 'Thống kê':
+                return <ThongKe />;
             // Thêm các case cho các menu khác
             default:
                 return null;
@@ -33,7 +39,7 @@ function Admin() {
             <div className={cx('inner')}>
                 <SidebarAdmin handleMenuClick={handleMenuClick} />
                 <div className={cx('component-render')}>
-                    {renderComponent() || <QuanLyTaiKhoan />}
+                    {renderComponent() || <ThongKe />}
                 </div>
             </div>
         </div>

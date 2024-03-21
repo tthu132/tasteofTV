@@ -7,7 +7,14 @@ import { faBell, faCartShopping, faCircleUser, faHeart, faMagnifyingGlass, faSpi
 import { useEffect, useState, useRef } from 'react';
 import Products from '~/components/Products';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux'
+import { searchProduct } from '~/redux/slice/productSlide';
+import { Link, NavLink } from 'react-router-dom';
 
+import * as ProductService from '~/services/ProductService'
+import { useNavigate } from 'react-router-dom';
+import Loading from '~/components/Loading';
+import { useDebounce } from '~/hooks/useDebounce';
 const cx = classNames.bind(styles)
 
 
@@ -17,38 +24,49 @@ function Search() {
     const [searchResult, setSearchResult] = useState([])
     const [showResult, setShowResult] = useState(true)
     const [showLoading, setShowLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
+
 
     const inputRef = useRef()
+    // const history = useHistory();
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    const searchRedux = useSelector((state) => state?.product?.search)
+    const searchDebounce = useDebounce(searchRedux, 1000)
+
 
     useEffect(() => {
-        if (!searchValue.trim()) {
-            return;
+        const fetchProductSearch = async (searchRedux) => {
+            setIsLoading(true)
+            console.log('serach value ', searchRedux);
+            const res = await ProductService.getAllProduct(searchRedux)
+            setIsLoading(false)
+
+            setSearchResult(res.data)
+            setShowLoading(false)
+
         }
-
-        setShowLoading(true)
-
-        const fetchApi = async () => {
-            try {
-                const res = await axios.get(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-
-                setSearchResult(res.data.data)
-                setShowLoading(false)
-
-            } catch (erro) {
-                setShowLoading(false)
-            }
-        }
-
-        fetchApi()
-
-
-    }, [searchValue])
+        fetchProductSearch(searchDebounce)
+    }, [searchDebounce])
 
     const handleHindenResult = () => {
+        setShowResult()
         setShowResult(false)
     }
     console.log(searchResult);
     console.log(searchValue.length);
+    const handleKeyPress = (event) => {
+
+        if (event.key === 'Enter') {
+            setShowResult(false)
+
+
+            // Xử lý tìm kiếm ở đây, ví dụ:
+            navigate(`/ketquatimkiem/${searchValue}`);
+            console.log('Đang tìm kiếm:', searchValue);
+        }
+    };
     return (
         <Tippy
             interactive
@@ -57,16 +75,18 @@ function Search() {
             render={(attrs) => (
 
                 <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <div className={cx('search-title')}>{
-                            searchResult.map((item, index) => (
-                                <div key={index}>
+                    <Loading isLoading={isLoading}>
+                        <PopperWrapper>
+                            <div className={cx('search-title')}>{
+                                searchResult && searchResult.map((item, index) => (
+                                    <div key={index}>
 
-                                    <Products data={item}></Products>
-                                </div>
-                            ))
-                        }</div>
-                    </PopperWrapper>
+                                        <Products data={item}></Products>
+                                    </div>
+                                ))
+                            }</div>
+                        </PopperWrapper>
+                    </Loading>
                 </div>
             )}>
 
@@ -76,10 +96,22 @@ function Search() {
                     ref={inputRef}
                     value={searchValue}
                     onChange={(e) => {
+
                         e.target.value = e.target.value.trimStart()
                         setSearchValue(e.target.value)
+
+                        dispatch(searchProduct(e.target.value))
+
                     }}
                     onFocus={() => setShowResult(true)}
+                    onKeyPress={handleKeyPress}
+                    onKeyDown={(e) => {
+                        if ((e.key === 'Backspace' || e.key === 'Delete')) {
+                            setSearchResult('')
+                            // Xử lý sự kiện xóa ở đây
+                            // Ví dụ: gọi hàm để xóa dữ liệu liên quan
+                        }
+                    }}
 
                 ></input>
 
@@ -97,9 +129,9 @@ function Search() {
                         {showLoading &&
                             <button><FontAwesomeIcon className={cx('icon', 'loading')} icon={faSpinner} /></button>}
                     </div>
-                    {/* <Tippy content='Tìm kiếm'> */}
-                    <button className={cx('icon-search', 'icon')}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-                    {/* </Tippy> */}
+
+                    <NavLink to={`/ketquatimkiem/${searchValue}`}><FontAwesomeIcon className={cx('icon-search', 'icon')} icon={faMagnifyingGlass} /></NavLink>
+
                 </div>
 
             </div>
