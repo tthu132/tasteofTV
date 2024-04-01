@@ -23,6 +23,9 @@ import { useSelector } from 'react-redux'
 import * as UserService from '~/services/UserService'
 import { resetUser } from '~/redux/slice/userSlide';
 import { UseDispatch, useDispatch } from 'react-redux';
+import * as CardService from '~/services/CardService'
+import { useQuery } from '@tanstack/react-query';
+import { updateOrderProduct } from '~/redux/slice/orderSlice';
 
 const cx = classNames.bind(styles)
 
@@ -40,8 +43,35 @@ function Header() {
 
   const dispatch = useDispatch()
 
+
+
   useEffect(() => {
     setName(currentUser.name)
+    console.log('curent ', currentUser);
+
+    if (currentUser?.id) {
+      const fetchCart = async () => {
+        const res = await CardService.getCard(currentUser.id);
+        console.log('datacart ', res.data);
+
+
+        dispatch(updateOrderProduct({
+          orderItem: res.data
+
+        }))
+
+
+        return res.data
+      }
+
+      fetchCart();
+    } else {
+      dispatch(updateOrderProduct({
+        orderItem: ''
+
+      }))
+    }
+
   }, [currentUser.name])
 
 
@@ -164,6 +194,19 @@ function Header() {
 
                                     buttonLogout>Đăng Xuất
                                   </Button>
+                                </li>
+                                <li>
+                                  <p
+                                    onClick={() => navigate('/taikhoan/donhang', {
+                                      state: {
+                                        id: currentUser?.id,
+                                        token: currentUser?.access_token
+                                      }
+                                    })}
+                                    className={cx('icon', 'order')}
+
+                                  >Đơn hàng của tôi
+                                  </p>
                                 </li>
                               </ul>
                             </PopperWrapper>

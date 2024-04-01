@@ -16,12 +16,28 @@ const initialState = {
     isDelivered: false,
     deliveredAt: '',
     isSucessOrder: false,
+    note:''
 }
 
 export const orderSlide = createSlice({
     name: 'order',
     initialState,
     reducers: {
+        update: (state, action) => {
+            const { shippingAddress, itemsPrice, shippingPrice, totalPrice, orderItems, paymentMethod } = action.payload
+            state.orderItems = orderItems
+            state.shippingAddress = shippingAddress
+            state.itemsPrice = itemsPrice
+            state.shippingPrice = shippingPrice
+            state.totalPrice = totalPrice
+            state.paymentMethod = paymentMethod
+
+        },
+        updateOrderProduct: (state, action) => {
+            const { orderItem } = action.payload
+            console.log('orderItem ', orderItem);
+            state.orderItems = orderItem
+        },
         addOrderProduct: (state, action) => {
             const { orderItem } = action.payload
             const itemOrder = state?.orderItems?.find((item) => item?.product === orderItem.product)
@@ -81,18 +97,23 @@ export const orderSlide = createSlice({
         },
         selectedOrder: (state, action) => {
             const { listChecked } = action.payload
+            console.log('list-checked', listChecked);
             const orderSelected = []
-            state.orderItems.forEach((order) => {
-                if (listChecked.includes(order.product)) {
-                    orderSelected.push(order)
-                };
-            });
+            if (Array.isArray(state?.orderItems)) {
+                state.orderItems.forEach((order) => {
+                    if (listChecked.includes(order.product)) {
+                        orderSelected.push(order);
+                    }
+                });
+            } else {
+                console.error('state.orderItems is not an array');
+            }
             state.orderItemsSlected = orderSelected
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addOrderProduct, increaseAmount, decreaseAmount, removeOrderProduct, removeAllOrderProduct, selectedOrder, resetOrder } = orderSlide.actions
+export const { updateOrderProduct, addOrderProduct, increaseAmount, decreaseAmount, removeOrderProduct, removeAllOrderProduct, selectedOrder, resetOrder, update } = orderSlide.actions
 
 export default orderSlide.reducer

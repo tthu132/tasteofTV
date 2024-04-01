@@ -1,0 +1,18 @@
+.price {
+    width: 200px;
+    /* Chiều rộng của container */
+    height: 20px;
+    /* Chiều cao của container */
+
+    /* Đường viền để hiển thị kích thước của container */
+
+    /* Thiết lập các thuộc tính để chữ không bị tràn ra ngoài */
+    overflow: hidden;
+    /* Không hiển thị phần chữ tràn ra ngoài container */
+    white-space: nowrap;
+    /* Không ngắt dòng cho chữ */
+    text-overflow: ellipsis;
+    z-index: 10000;
+
+    /* Hiển thị dấu chấm ba (...) cho phần chữ bị tràn ra */
+}

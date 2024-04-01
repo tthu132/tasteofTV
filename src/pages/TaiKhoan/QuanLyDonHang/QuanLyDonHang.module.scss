@@ -1,0 +1,110 @@
+.item-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    input {
+        padding: 8px;
+
+        border: none;
+        border-bottom: 1px solid gray;
+        font-size: 18px;
+        transition: all .5s ease-out;
+        cursor: pointer;
+        width: 100%;
+
+        background-color: transparent;
+
+    }
+
+    .icon {
+        position: absolute;
+        right: 0;
+
+    }
+
+
+    input:focus {
+        border-bottom: 2px solid #55833D;
+        // background-color: #cde7be;
+
+    }
+
+    .input-group {
+        width: 300px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+
+        &.ant-upload-list {
+            display: none;
+        }
+
+    }
+}
+
+.wraper {
+    min-height: 600px;
+    padding: 20px;
+
+    border-radius: 8px;
+
+    h2 {
+        padding: 0 0 17px 0;
+    }
+}
+
+.inner {
+    background-color: #F5F5FA;
+    // padding: 20px;
+    width: 100%;
+}
+
+.header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    /* Canh giữa theo chiều dọc */
+    justify-content: center;
+    /* Canh giữa theo chiều ngang */
+
+    ul {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between
+    }
+
+    li {
+        flex-grow: 1;
+        /* Mở rộng và lấp đầy không gian còn trống */
+        text-align: center;
+        /* Canh giữa nội dung của li */
+
+        // width: 140px;
+        height: 100%;
+        padding: 9px 0;
+        cursor: pointer;
+        width: 122px;
+        color: gray;
+        font-size: 15px;
+
+    }
+
+    .active {
+        font-weight: 400;
+        border-bottom: 2px solid gray;
+        color: black;
+
+    }
+}

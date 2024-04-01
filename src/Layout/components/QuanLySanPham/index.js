@@ -34,7 +34,8 @@ function QuanLySanPham() {
         countInStock: '',
         description: '',
         idProductCategory: '',
-        idsImage: []
+        idsImage: [],
+        discount: ''
 
     })
     const [stateProductDetail, setStateProductdetail] = useState({
@@ -43,7 +44,8 @@ function QuanLySanPham() {
         countInStock: '',
         description: '',
         idProductCategory: '',
-        idsImage: []
+        idsImage: [],
+        discount: ''
     })
     const [rowSelected, setRowSelected] = useState('')
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -61,6 +63,7 @@ function QuanLySanPham() {
     const { Option } = Select;
 
     const user = useSelector((state) => state.user)
+    console.log('user ', user);
 
     const renderAction = () => {
         return (
@@ -263,7 +266,9 @@ function QuanLySanPham() {
                 countInStock: res.data.countInStock,
                 description: res.data.description,
                 idProductCategory: res.data.idProductCategory,
-                idsImage: res.data.idsImage || [] // Thiết lập mặc định là một mảng trống nếu idsImage không tồn tại
+                idsImage: res.data.idsImage || [],
+                discount: res.data.discount
+                // Thiết lập mặc định là một mảng trống nếu idsImage không tồn tại
             });
 
             if (res.data.idsImage) { // Kiểm tra xem idsImage có tồn tại không trước khi thực hiện map
@@ -401,7 +406,8 @@ function QuanLySanPham() {
             countInStock: '',
             description: '',
             idProductCategory: '',
-            idsImage: ''
+            idsImage: '',
+            discount: ''
         })
 
         form.resetFields()
@@ -420,7 +426,8 @@ function QuanLySanPham() {
             countInStock: '',
             description: '',
             idProductCategory: '',
-            idsImage: []
+            idsImage: [],
+            discount: ''
         })
 
         form.resetFields()
@@ -453,6 +460,11 @@ function QuanLySanPham() {
                             onSettled: () => {
                                 queryProduct.refetch();
                             },
+                        }, {
+                            onSuccess: () => {
+                                message.success()
+                                setIsModalOpen(false)
+                            }
                         });
                     }
                 }
@@ -513,6 +525,10 @@ function QuanLySanPham() {
             mutationUpdate.mutate({ id: rowSelected, token: user.access_token, ...stateProductDetail }, {
                 onSettled: () => {
                     queryProduct.refetch()
+                }
+            }, {
+                onSuccess: () => {
+
                 }
             });
         }
@@ -823,7 +839,8 @@ function QuanLySanPham() {
             countInStock: '',
             description: '',
             idProductCategory: '',
-            idsImage: ''
+            idsImage: '',
+            discount: ''
 
         })
         form1.resetFields()
@@ -989,6 +1006,14 @@ function QuanLySanPham() {
 
                     </Form.Item>
                     <Form.Item
+                        label="Giảm giá"
+                        name="discount"
+
+                    >
+                        <Input value={stateProduct.discount} onChange={handleOnChange} name="discount" />
+
+                    </Form.Item>
+                    <Form.Item
                         label="Số lượng sản phẩm"
                         name="countInStock"
                         rules={[
@@ -1129,6 +1154,15 @@ function QuanLySanPham() {
                             ]}
                         >
                             <Input value={stateProductDetail.price} onChange={handleOnChangeDetail} name="price" />
+
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Giảm giá"
+                            name="discount"
+
+                        >
+                            <Input value={stateProductDetail.discount} onChange={handleOnChangeDetail} name="discount" />
 
                         </Form.Item>
                         <Form.Item

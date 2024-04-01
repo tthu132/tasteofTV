@@ -142,6 +142,19 @@
     }
 }
 
+.order {
+    border-bottom: 1px solid gray;
+    margin: 10px 0;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+
+        // color: #55833D;
+        border-bottom: 2px solid #55833D;
+    }
+}
+
 .typpy-user {
     position: absolute;
     top: 0;

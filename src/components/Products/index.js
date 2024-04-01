@@ -8,6 +8,7 @@ import { useMutationHook } from '~/hooks/useMutationHook';
 import { useSelector, useDispatch } from 'react-redux'
 
 
+
 const cx = classNames.bind(styles)
 
 function Products({ data }) {
@@ -15,7 +16,7 @@ function Products({ data }) {
     const [image, setImage] = useState()
 
     const searchRedux = useSelector((state) => state?.product?.search)
-    console.log('xuuuuuu ', data.idsImage.length);
+    console.log('xuuuuuu ', data);
     useEffect(() => {
         if (data.idsImage.length > 0) {
             const fetchImage = async (id) => {
@@ -43,7 +44,10 @@ function Products({ data }) {
         <NavLink to={`/product/${encodeURIComponent(data._id)}`}>
             <Images src={image} Product></Images>
             <p>{data.name}</p>
-            <h4>{formatCurrency(data.price)}</h4>
+            <h4 className={cx('price')}>{formatCurrency(data.price)}</h4>
+            {
+                data.selled && <p style={{ color: 'gray' }}>Đã bán: {data.selled}</p>
+            }
         </NavLink>
 
 

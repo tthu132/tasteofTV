@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { publicRoutes, privateRoute } from './routes';
-import { DefaultLayout } from '~/Layout';
+import { DefaultLayout, HeaderOnly } from '~/Layout';
 import { Fragment, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,10 +18,13 @@ import NotFoundPage from '~/pages/NotFoundPage';
 
 
 
+
 function App() {
-  const count = useSelector((state) => state.counter.value)
+  const count = useSelector((state) => state?.counter?.value)
   const user = useSelector((state) => state.user)
   console.log('user admin ', user.isAdmin);
+  console.log('user admin ', user);
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -85,6 +88,7 @@ function App() {
 
             let Layout = DefaultLayout
             if (route.layout) Layout = route.layout
+
             else if (route.layout === null) Layout = Fragment
 
             return <Route key={index} path={route.path} element={
@@ -99,7 +103,9 @@ function App() {
             const Page = route.component
 
             let Layout = DefaultLayout
+
             if (route.layout) Layout = route.layout
+            else if (route.layout === HeaderOnly) Layout = HeaderOnly
             else if (route.layout === null) Layout = Fragment
 
             return <Route key={index} path={route.path} element={
@@ -109,7 +115,7 @@ function App() {
             } />
 
           })}
-          
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
 

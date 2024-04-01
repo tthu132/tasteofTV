@@ -4,7 +4,15 @@
     grid-template-columns: 1fr 2fr;
     gap: 40px;
     margin: 20px 0;
-    min-height: 800px;
+    min-height: 500px;
+    background-color: #F5F5FA;
+    padding: 8px;
+    // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5)
+
+    .vedet {
+        height: 350px;
+
+    }
 }
 
 .button-quality {
@@ -12,6 +20,7 @@
     flex-direction: row;
     border: 1px solid #E7E7E9;
     width: 152px;
+    margin: 20px 0;
 
     .btnContronl {
         width: 50px;
@@ -54,4 +63,9 @@
     top: 50%;
     right: 50%;
     z-index: 999
+}
+
+.price {
+    color: rgb(254, 44, 85);
+    margin: 10px 0;
 }

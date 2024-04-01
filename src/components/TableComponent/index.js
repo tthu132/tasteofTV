@@ -8,7 +8,7 @@ const cx = classNames.bind(styles)
 
 function TableComponent(props) {
 
-    const { selectionType = 'checkbox', dataa = [], isLoading = false, columns = [] } = props
+    const { selectionType = 'checkbox', dataa = [], isLoading = false, columns = [], Top, colSpan } = props
     // const { selectionType = 'checkbox', dataa: dataSource = [], isLoading = false, columns = [], handleDelteMany } = props
 
     const rowSelection = {
@@ -23,25 +23,33 @@ function TableComponent(props) {
     };
 
 
-
-
     return (
 
         <Loading isLoading={isLoading}>
             <div className={cx('table-container')}>
 
 
-                <Table
-                    rowSelection={{
-                        type: selectionType,
-                        ...rowSelection,
-                    }}
-                    columns={columns}
-                    dataSource={dataa}
-                    {...props}
+                {
+                    Top ? <Table
+                        colSpan={colSpan}
+                        columns={columns}
+                        dataSource={dataa}
+                        {...props}
+                        pagination={{ pageSize: 5 }}
 
-                    rowClassName={cx('row')}
-                />
+                        rowClassName={cx('row')}
+                    /> : <Table
+                        rowSelection={{
+                            type: selectionType,
+                            ...rowSelection,
+                        }}
+                        columns={columns}
+                        dataSource={dataa}
+                        {...props}
+
+                        rowClassName={cx('row')}
+                    />
+                }
             </div>
         </Loading>
     );

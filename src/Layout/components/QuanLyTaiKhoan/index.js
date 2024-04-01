@@ -724,7 +724,7 @@ function QuanLyTaiKhoan() {
             </ModalComponent >
             <DrawerComponent
                 forceRender
-                title="Chi tiết sản phẩm"
+                title="Chi tiết người dùng"
                 isOpen={isOpenDrawer}
                 onClose={onCloseDetail}
                 width="80%"

@@ -13,8 +13,14 @@ import Admin from '~/pages/Admin';
 import KetQuaTimKiem from '~/pages/KetQuaTimKiem';
 import ProductType from '~/pages/ProductType';
 import OrderPage from '~/pages/OderPage';
+import Payment from '~/pages/Payment';
+import OrderSuccess from '~/pages/OrderSuccess';
+import MyOrder from '~/Layout/components/MyOrder';
+import DetailOrder from '~/Layout/components/DetailOrder';
 
 import { HeaderOnly } from '~/Layout';
+import LayoutAdmin from '~/Layout/LayoutAdmin';
+
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -29,20 +35,19 @@ const publicRoutes = [
     { path: '/ketquatimkiem/:key', component: KetQuaTimKiem },
     { path: '/type/:key', component: ProductType },
     { path: '/order', component: OrderPage },
+    { path: '/payment', component: Payment },
+    { path: '/ordersuccess', component: OrderSuccess },
 
 
 
-
+    { path: '/my-order', component: MyOrder, layout: HeaderOnly },
+    { path: '/detail-order/:id', component: DetailOrder, layout: HeaderOnly },
 
     { path: '/taikhoan/edit', component: ThongTinTaiKhoan, layout: HeaderOnly },
     { path: '/taikhoan/donhang', component: QuanLyDonHang, layout: HeaderOnly },
-
-
-
 ]
 const privateRoute = [
-    { path: '/admin', component: Admin, layout: null },
-
+    { path: '/admin', component: Admin, layout: LayoutAdmin },
 ]
 
 export { publicRoutes, privateRoute }

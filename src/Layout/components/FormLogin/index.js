@@ -26,7 +26,6 @@ function FormLogin({ formDN, handleCloseForm, openRegister }) {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-
     const classes = cx('wrapper', {
         formDN
     })

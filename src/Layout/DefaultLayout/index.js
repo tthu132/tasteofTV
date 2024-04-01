@@ -12,6 +12,7 @@ function DefaultLayout({ children }) {
             <Header className={cx('header')} />
             {/* <div className={cx('container')}> */}
             <Sidebar />
+            <p style={{ width: '200px', backgroundColor: 'red' }}>hahahah</p>
             <div className={cx('content')}>{children}</div>
             {/* </div> */}
             <Footer />

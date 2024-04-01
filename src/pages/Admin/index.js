@@ -7,7 +7,7 @@ import QuanLyBlog from '~/Layout/components/QuanLyBlog';
 import ThongKe from '~/Layout/components/ThongKe';
 import { useState } from 'react';
 import Header from '~/Layout/components/Header';
-
+import QuanLyDonHangAdmin from '~/Layout/components/QuanLyDonHangAdmin';
 const cx = classNames.bind(styles)
 
 function Admin() {
@@ -28,6 +28,8 @@ function Admin() {
                 return <QuanLyBlog />;
             case 'Thống kê':
                 return <ThongKe />;
+            case 'Quản lý đơn hàng':
+                return <QuanLyDonHangAdmin />;
             // Thêm các case cho các menu khác
             default:
                 return null;
@@ -35,10 +37,12 @@ function Admin() {
     };
     return (
         <div className={cx('wrapper')}>
-            <Header />
-            <div className={cx('inner')}>
-                <SidebarAdmin handleMenuClick={handleMenuClick} />
-                <div className={cx('component-render')}>
+            {/* <Header /> */}
+
+            <div className={cx('inner')} >
+                <div className={cx('sidebar')}>
+                    <SidebarAdmin handleMenuClick={handleMenuClick} /></div>
+                <div className={cx('component-render')} >
                     {renderComponent() || <ThongKe />}
                 </div>
             </div>
