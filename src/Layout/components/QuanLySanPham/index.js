@@ -35,7 +35,8 @@ function QuanLySanPham() {
         description: '',
         idProductCategory: '',
         idsImage: [],
-        discount: ''
+        discount: '',
+        donvi: ''
 
     })
     const [stateProductDetail, setStateProductdetail] = useState({
@@ -45,7 +46,8 @@ function QuanLySanPham() {
         description: '',
         idProductCategory: '',
         idsImage: [],
-        discount: ''
+        discount: '',
+        donvi: ''
     })
     const [rowSelected, setRowSelected] = useState('')
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -267,7 +269,8 @@ function QuanLySanPham() {
                 description: res.data.description,
                 idProductCategory: res.data.idProductCategory,
                 idsImage: res.data.idsImage || [],
-                discount: res.data.discount
+                discount: res.data.discount,
+                donvi: res.data.donvi
                 // Thiết lập mặc định là một mảng trống nếu idsImage không tồn tại
             });
 
@@ -407,7 +410,8 @@ function QuanLySanPham() {
             description: '',
             idProductCategory: '',
             idsImage: '',
-            discount: ''
+            discount: '',
+            donvi: ''
         })
 
         form.resetFields()
@@ -427,7 +431,9 @@ function QuanLySanPham() {
             description: '',
             idProductCategory: '',
             idsImage: [],
-            discount: ''
+            discount: '',
+            donvi: ''
+
         })
 
         form.resetFields()
@@ -840,7 +846,8 @@ function QuanLySanPham() {
             description: '',
             idProductCategory: '',
             idsImage: '',
-            discount: ''
+            discount: '',
+            donvi: ''
 
         })
         form1.resetFields()
@@ -989,7 +996,19 @@ function QuanLySanPham() {
                     >
                         <Input value={stateProduct.name} onChange={handleOnChange} name="name" />
                     </Form.Item>
+                    <Form.Item
+                        label="Đơn vị tính"
+                        name="donvi"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Vui lòng nhập nhập đơn vị sản phẩm!',
+                            },
+                        ]}
+                    >
+                        <Input value={stateProduct.donvi} onChange={handleOnChange} name="donvi" />
 
+                    </Form.Item>
 
 
                     <Form.Item
@@ -1141,7 +1160,19 @@ function QuanLySanPham() {
                         >
                             <Input value={stateProductDetail.name} onChange={handleOnChangeDetail} name="name" />
                         </Form.Item>
+                        <Form.Item
+                            label="Đơn vị tính"
+                            name="donvi"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập đơn vị sản phẩm!',
+                                },
+                            ]}
+                        >
+                            <Input value={stateProductDetail.donvi} onChange={handleOnChangeDetail} name="donvi" />
 
+                        </Form.Item>
 
                         <Form.Item
                             label="Giá sản phẩm"

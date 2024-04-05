@@ -23,10 +23,7 @@ import { Spin } from 'antd'
 const cx = classNames.bind(styles)
 function QuanLyTaiKhoan() {
 
-
-
     const [isTest, setTest] = useState(false)
-
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [stateUser, setStateUser] = useState({
@@ -34,8 +31,6 @@ function QuanLyTaiKhoan() {
         email: '',
         phone: '',
         isAdmin: false,
-
-
     })
     const [stateUserDetail, setStateUserdetail] = useState({
         name: '',
@@ -118,28 +113,7 @@ function QuanLyTaiKhoan() {
                     >
                         Reset
                     </Button>
-                    {/* <Button
-                            type="link"
-                            size="small"
-                            onClick={() => {
-                                confirm({
-                                    closeDropdown: false,
-                                });
-                                setSearchText(selectedKeys[0]);
-                                setSearchedColumn(dataIndex);
-                            }}
-                        >
-                            Filter
-                        </Button> */}
-                    {/* <Button
-                            type="link"
-                            size="small"
-                            onClick={() => {
-                                close();
-                            }}
-                        >
-                            close
-                        </Button> */}
+                   
                 </Space>
             </div>
         ),
@@ -157,20 +131,7 @@ function QuanLyTaiKhoan() {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-        // render: (text) =>
-        //     searchedColumn === dataIndex ? (
-        //         <Highlighter
-        //             highlightStyle={{
-        //                 backgroundColor: '#ffc069',
-        //                 padding: 0,
-        //             }}
-        //             searchWords={[searchText]}
-        //             autoEscape
-        //             textToHighlight={text ? text.toString() : ''}
-        //         />
-        //     ) : (
-        //         text
-        //     ),
+      
     });
     const mutation = useMutationHook(
         (data) => {

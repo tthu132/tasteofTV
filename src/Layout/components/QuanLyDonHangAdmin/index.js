@@ -146,20 +146,7 @@ function QuanLyDonHangAdmin() {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-        // render: (text) =>
-        //     searchedColumn === dataIndex ? (
-        //         <Highlighter
-        //             highlightStyle={{
-        //                 backgroundColor: '#ffc069',
-        //                 padding: 0,
-        //             }}
-        //             searchWords={[searchText]}
-        //             autoEscape
-        //             textToHighlight={text ? text.toString() : ''}
-        //         />
-        //     ) : (
-        //         text
-        //     ),
+     
     });
     const mutation = useMutationHook(
         (data) => {
@@ -724,12 +711,7 @@ function QuanLyDonHangAdmin() {
             return 0;
         }// hoặc giá trị mặc định khác nếu không có orderItems
     }, [stateOrderDetail?.orderItems])
-    // const priceMemo = useMemo(() => {
-    //     const result = data?.orderItems?.reduce((total, cur) => {
-    //         return total + ((cur.price * cur.amount))
-    //     }, 0)
-    //     return result
-    // }, [data])
+
     console.log('pricemomo', priceMemo);
     const priceDiscountMemo = useMemo(() => {
         if (Array.isArray(stateOrderDetail?.orderItems)) {
