@@ -39,7 +39,7 @@ function Search() {
     useEffect(() => {
         const fetchProductSearch = async (searchRedux) => {
             setIsLoading(true)
-            console.log('serach value ', searchRedux);
+            
             const res = await ProductService.getAllProduct(searchRedux)
             setIsLoading(false)
 
@@ -54,8 +54,6 @@ function Search() {
         setShowResult()
         setShowResult(false)
     }
-    console.log(searchResult);
-    console.log(searchValue.length);
     const handleKeyPress = (event) => {
 
         if (event.key === 'Enter') {
@@ -64,7 +62,6 @@ function Search() {
 
             // Xử lý tìm kiếm ở đây, ví dụ:
             navigate(`/ketquatimkiem/${searchValue}`);
-            console.log('Đang tìm kiếm:', searchValue);
         }
     };
     return (

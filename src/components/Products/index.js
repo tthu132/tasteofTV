@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import * as ImageService from '~/services/ImageService'
 import { useMutationHook } from '~/hooks/useMutationHook';
 import { useSelector, useDispatch } from 'react-redux'
+import { Button } from 'antd';
 
 
 
@@ -16,38 +17,49 @@ function Products({ data }) {
     const [image, setImage] = useState()
 
     const searchRedux = useSelector((state) => state?.product?.search)
-    console.log('xuuuuuu ', data);
     useEffect(() => {
-        if (data.idsImage.length > 0) {
+        if (data?.idsImage.length > 0) {
             const fetchImage = async (id) => {
 
                 const res = await ImageService.getDetailsImage(id)
-                console.log('resssssssssssssss', res);
 
 
-                setImage(res.data.image)
+                setImage(res?.data?.image)
 
             }
-            fetchImage(data.idsImage[0])
+            fetchImage(data?.idsImage[0])
 
-            console.log('xuuuuu 1 ', image);
         }
-    }, [data.idsImage[0]])
+    }, [data?.idsImage[0]])
 
 
-    console.log('dataaaaaa', data.idsImage);
     function formatCurrency(number) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
     }
     return (
 
         <NavLink to={`/product/${encodeURIComponent(data._id)}`}>
-            <Images src={image} Product></Images>
-            <p>{data.name}</p>
-            <h4 className={cx('price')}>{formatCurrency(data.price)}</h4>
-            {
-                data.selled && <p style={{ color: 'gray' }}>Đã bán: {data.selled}</p>
-            }
+            <div className={cx('wrapper')}>
+                <div className={cx('image')}>
+                    <Images src={image} Product></Images>
+                    {
+                        data?.discount && <div><Button Sale className={cx('sale')} ><h4>-{data.discount}%</h4></Button></div>
+                    }
+                </div>
+                <p style={{ margin: '10px 0' }}>{data.name}</p>
+
+                {/* <h5 className={cx('price')}>{formatCurrency(data.price)}</h5> */}
+                {
+                    data.discount ?
+                        <div >
+                            <p className={cx('old-price')}>{formatCurrency(data?.price)}</p>
+                            <h4 className={cx('price')}>{formatCurrency(data.price - (data?.price * data?.discount) / 100)}</h4>
+                        </div> : <h1 className={cx('price')}>{formatCurrency(data?.price)}</h1>
+                }
+                {
+                    data.selled ? <p style={{ color: 'gray' }}>Đã bán: {data.selled}</p> : <></>
+                }
+            </div>
         </NavLink>
 
 

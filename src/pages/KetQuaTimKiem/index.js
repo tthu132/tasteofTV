@@ -13,7 +13,6 @@ const cx = classNames.bind(styles)
 function KetQuaTimKiem() {
     const { key } = useParams();
     const [isLoading, setIsLoading] = useState(true);
-    console.log('key:', key);
 
     const searchRedux = useSelector((state) => state?.product?.search)
     const [searchResult, setSearchResult] = useState()
@@ -22,8 +21,6 @@ function KetQuaTimKiem() {
         const fetchProductSearch = async (key) => {
             setIsLoading(true)
             const res = await ProductService.getAllProduct(key)
-            console.log('tressssssssssssssst 1', res);
-            console.log('tressssssssssssssst 11', res.data[0]);
 
             setSearchResult(res.data)
             setIsLoading(false);

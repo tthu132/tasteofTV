@@ -19,7 +19,6 @@ export const updateCard = async (user, product, newQuantity) => {
 }
 
 export const deleteCard = async ({ user, productList }) => {
-    console.log('checkkk', user, productList);
     const res = await axios.delete(`${process.env.REACT_APP_API_KEY}/card/delete-many`, { data: { user, productList } });
     return res.data;
 };

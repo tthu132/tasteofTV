@@ -14,7 +14,7 @@ function Sidebar() {
           <MenuItem activeHome title='Sản Phẩm' to='/sanpham'></MenuItem>
 
           <MenuItem activeHome title='Liên Hệ' to='/lienhe'></MenuItem>
-          <MenuItem activeHome title='Tin Tức' to='/tintuc'></MenuItem>
+          <MenuItem activeHome title='Blog' to='/tintuc'></MenuItem>
 
         </Menu>
       </div>

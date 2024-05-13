@@ -15,7 +15,6 @@ function QuanLyDonHang() {
     const user = useSelector((state) => state.user)
 
     const location = useLocation()
-    console.log('location ', location);
     const { state } = location
     // const navigate = useNavigate()
     let token
@@ -27,18 +26,15 @@ function QuanLyDonHang() {
         token = user?.access_token
         id = user?.id
     }
-    console.log('toku ', token);
 
     const fetchMyOrder = async () => {
         const res = await OrderService.getOrderByUserId(id, token)
 
-        console.log('location 1 ', res.data);
         return res.data
     }
     const queryOrder = useQuery({ queryKey: ['orders'], queryFn: fetchMyOrder, })
     const { isPending, data } = queryOrder
 
-    console.log('daaaaaaaaaa ', data);
     const status1 = "Đặt hàng thành công";
     const status2 = "Chờ thanh toán";
     const status3 = "Đang xử lý";
@@ -54,7 +50,6 @@ function QuanLyDonHang() {
     const ordersWithDesiredStatus5 = data?.filter(order => order.status === status5);
 
 
-    console.log('333333', ordersWithDesiredStatus3);
 
     const [activeMenuItem, setActiveMenuItem] = useState('Tất cả đơn');
 

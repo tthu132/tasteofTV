@@ -18,7 +18,6 @@ function ProductDetailComponet({ id }) {
         return res.data
     }
     const { isPending, data: dataDetail } = useQuery({ queryKey: ['product-detail'], queryFn: fetchDetailProduct, enabled: !!id })
-    console.log('productDetail ', dataDetail);
     return (
         <div>
             <FormLogin></FormLogin>

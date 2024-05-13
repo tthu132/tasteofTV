@@ -12,12 +12,11 @@ function SliderComponent({ arrImages }) {
         autoplay: true,
         autoSpeed: 600
     };
-    console.log(arrImages);
     return (
         <Slider {...settings}>
             {arrImages.map((item, index) => {
                 return (
-                    <Images src={item} key={index}></Images>
+                    <Images test src={item} key={index}></Images>
                 )
             })}
         </Slider>

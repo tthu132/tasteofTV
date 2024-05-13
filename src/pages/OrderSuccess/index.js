@@ -27,19 +27,17 @@ const cx = classNames.bind(styles)
 function OrderSuccess() {
     const order = useSelector((state) => state.order)
     const user = useSelector((state) => state.user)
-    console.log('bodyy 20', user);
-    console.log('bodyy 202', order);
     const dispatch = useDispatch()
 
     const location = useLocation()
     const { state } = location
     const navigate = useNavigate()
-    console.log('location ', location);
 
     const [searchParams] = useSearchParams()
-    const userString = searchParams.get('totalPriceMemo');
+    const userString = searchParams.get('');
+    const status = searchParams.get('vnp_TransactionStatus');
+
     // const getUser = JSON.parse(decodeURIComponent(userString));
-    // console.log('bodyy 10 ', getUser);
     const [loadingUser, setLoadingUser] = useState(true)
 
     const mutationAddOrder = useMutationHook(
@@ -62,7 +60,6 @@ function OrderSuccess() {
     const test = order?.paymentMethod
     let test2
     const priceMemo = useMemo(() => {
-        console.log('momo', order?.orderItemsSlected);
         const result = order?.orderItemsSlected?.reduce((total, cur) => {
             return total + ((cur.price * cur.amount))
         }, 0)
@@ -104,9 +101,21 @@ function OrderSuccess() {
         } else {
             setLoadingUser(true)
         }
-        console.log('payment ', test);
+        console.log('bodyyy VNPAYS', {
+            token: user?.access_token,
+            orderItems: order?.orderItemsSlected,
+            fullName: user?.name,
+            address: user?.address,
+            phone: user?.phone,
+            city: user?.city,
+            paymentMethod: order?.paymentMethod,
+            itemsPrice: priceMemo,
+            shippingPrice: diliveryPriceMemo,
+            totalPrice: totalPriceMemo,
+            user: user?.id
+        });
         if (test === 'VNPay' && user?.access_token && order?.orderItemsSlected && user?.name
-            && user?.address && user?.phone && user?.city && priceMemo && user?.id) {
+            && user?.address && user?.phone && priceMemo && user?.id && status == '00') {
             console.log('bodyyy', {
                 token: user?.access_token,
                 orderItems: order?.orderItemsSlected,
@@ -143,14 +152,12 @@ function OrderSuccess() {
                         order?.orderItemsSlected?.forEach(element => {
                             arrayOrdered.push(element.product)
                         });
-                        console.log('arrayOrdered', arrayOrdered);
                         mutationRemove.mutate({ user: user.id, productList: [...arrayOrdered] });
                         dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }))
 
                         message.success('Đặt hàng thành công')
 
 
-                        console.log('orderrrr 1', test2);
 
 
                     }
@@ -165,7 +172,6 @@ function OrderSuccess() {
         }
     }, [user, userString])
 
-    console.log('orderrrr 2', test2);
     function formatCurrency(number) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
     }
@@ -174,19 +180,38 @@ function OrderSuccess() {
             <h4><span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Trang chủ</span> - <span onClick={() => navigate('/order')}>Giỏ hàng</span> - <span>Thông tin đơn hàng</span></h4>
             <Loading isLoading={loadingUser}>
                 <div className={cx('inner')}>
+                    {/* <h1>{status}</h1> */}
 
-                    <div className={cx('left')}>
-                        {/* <h3>Đặt hàng thành công</h3> */}
+                    <Loading isLoading={isPendingOrder}>
+                        {
+                            status == '00' || order?.paymentMethod === 'later_money' || !status ?
+                                <div className={cx('left')}>
+                                    {/* <h3>Đặt hàng thành công</h3> */}
 
 
-                        <h1>Thanh toán thành công</h1>
-                        <Images noOrder src={images.pay}></Images>
-                        <div className={cx('action')}>
-                            <Button btnAdd onClick={() => navigate('/taikhoan/donhang')}>Xem đơn hàng</Button>
-                            <Button btnAdd onClick={() => navigate('/taikhoan/order')} >Tiếp tục mua sắm</Button>
-                        </div>
+                                    <h1>Thanh toán thành công</h1>
+                                    <Images noOrder src={images.pay}></Images>
+                                    <div className={cx('action')}>
+                                        <Button btnAdd onClick={() => navigate('/taikhoan/donhang')}>Xem đơn hàng</Button>
+                                        <Button btnAdd onClick={() => navigate('/order')} >Tiếp tục mua sắm</Button>
+                                    </div>
 
-                    </div>
+                                </div> :
+                                <div className={cx('left')}>
+                                    {/* <h3>Đặt hàng thành công</h3> */}
+
+
+                                    <h1>Thanh toán thất bại</h1>
+                                    <Images noOrder src={images.cancelpay}></Images>
+                                    <div className={cx('action')}>
+                                        <Button btnAdd onClick={() => navigate('/')}>Trở về Trang chủ</Button>
+                                        <Button btnAdd onClick={() => navigate('/order')} >Tiếp tục mua sắm</Button>
+                                    </div>
+
+                                </div>
+                        }
+                    </Loading>
+
 
 
                 </div>

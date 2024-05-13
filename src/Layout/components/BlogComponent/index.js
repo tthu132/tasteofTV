@@ -24,7 +24,6 @@ function BlogComponent({}) {
         }
 
     };
-    console.log('url', videoUrl);
     return (
         <div className={cx('wrapper')}>
             <input type="file" accept="video/*" onChange={handleFileUpload} />

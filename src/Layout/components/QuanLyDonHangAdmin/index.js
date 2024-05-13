@@ -64,7 +64,6 @@ function QuanLyDonHangAdmin() {
     const { Option } = Select;
 
     const user = useSelector((state) => state.user)
-    console.log('user ', user);
 
     const renderAction = () => {
         return (
@@ -146,7 +145,7 @@ function QuanLyDonHangAdmin() {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-     
+
     });
     const mutation = useMutationHook(
         (data) => {
@@ -218,7 +217,6 @@ function QuanLyDonHangAdmin() {
     })
     const fetchDetailOrder = async () => {
         const res = await OrderService.getDetailsOrder(rowSelected);
-        console.log('kiemtra 0', res.data);
         if (res.data) {
             setStateOrderDetail({
                 id: res.data._id,
@@ -241,12 +239,10 @@ function QuanLyDonHangAdmin() {
     }
 
     useEffect(() => {
-        console.log('state after update: ', stateProductDetail);
         const setValues = () => {
             if (form1 && stateProductDetail) {
                 Object.entries(stateProductDetail).forEach(([key, value]) => {
                     form1.setFieldValue(key, value);
-                    console.log('key-value', key, value);
                 });
             }
         };
@@ -274,13 +270,11 @@ function QuanLyDonHangAdmin() {
 
     const queryOrder = useQuery({ queryKey: ['orders'], queryFn: getAllOrder })
     const { isLoading: isLoadingOrders, data: orders } = queryOrder
-    console.log('orderrrrr', orders);
 
     useEffect(() => {
         if (orders?.data) {
 
             setTest(true);
-            console.log('orderrrrr', orders);
         }
     }, [orders?.data]);
 
@@ -595,7 +589,6 @@ function QuanLyDonHangAdmin() {
         return formattedDate;
     }
 
-    console.log('sieutest ', stateOrderDetail.orderItems);
 
     const refPDF = useRef()
 
@@ -610,7 +603,6 @@ function QuanLyDonHangAdmin() {
     const chuHangTram = ('không một' + defaultNumbers).split(' ');
 
     const convert_block_three = (number) => {
-        console.log('convert ', number);
         if (number == '000') return '';
         var _a = number + ''; //Convert biến 'number' thành kiểu string
 
@@ -702,7 +694,6 @@ function QuanLyDonHangAdmin() {
     }
     const priceMemo = useMemo(() => {
         if (Array.isArray(stateOrderDetail?.orderItems)) {
-            console.log('teeee', stateOrderDetail?.orderItems);
             const result = stateOrderDetail.orderItems.reduce((total, cur) => {
                 return total + (cur.price * cur.amount);
             }, 0);
@@ -712,7 +703,6 @@ function QuanLyDonHangAdmin() {
         }// hoặc giá trị mặc định khác nếu không có orderItems
     }, [stateOrderDetail?.orderItems])
 
-    console.log('pricemomo', priceMemo);
     const priceDiscountMemo = useMemo(() => {
         if (Array.isArray(stateOrderDetail?.orderItems)) {
             return stateOrderDetail?.orderItems.reduce((totalDiscount, item) => {
@@ -912,7 +902,6 @@ function QuanLyDonHangAdmin() {
                                             <th>Tạm tính</th>
                                         </tr>
                                     </thead>
-                                    {/* console.log('get order detail ', stateOrderDetail.orderItems[0]); */}
 
                                     <tbody>
                                         {stateOrderDetail?.orderItems[0]?.name && stateOrderDetail?.orderItems?.map((product) => (

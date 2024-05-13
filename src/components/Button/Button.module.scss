@@ -34,7 +34,8 @@
 .buttonLogin,
 .buttonProfile,
 .buttonLoginFrom,
-.bntOrder {
+.bntOrder,
+.btnBuy {
     background-color: rgb(254, 44, 85) !important;
     border: 2px solid rgb(254, 44, 85);
     color: white !important;
@@ -161,3 +162,5 @@
         transition-duration: 0.2s;
     }
 }
+
+.Sale {}

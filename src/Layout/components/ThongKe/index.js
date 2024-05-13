@@ -15,8 +15,9 @@ import images from '~/images';
 import Table from "~/components/TableComponent";
 import { FireFilled, ThunderboltFilled, FireTwoTone, FireOutlined, CodeSandboxCircleFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Tag } from 'antd';
-import { motion, useAnimation } from 'framer-motion';
 
+
+import Chart from '~/components/Chart';
 
 const cx = classNames.bind(styles)
 function ThongKe() {
@@ -24,7 +25,6 @@ function ThongKe() {
     const [isTest, setTest] = useState(false)
 
     const user = useSelector((state) => state.user)
-    console.log('user ', user);
     //--------------------------------------
     const getAllOrder = async () => {
         const res = await OrderService.getAllOrder(user?.access_token)
@@ -40,7 +40,6 @@ function ThongKe() {
     const queryUser = useQuery({ queryKey: ['users'], queryFn: getAllUser })
     const { isLoading: isLoadingUser, data: users } = queryUser
 
-    console.log('all user ', users);
 
     //--------------------------------
     const getAllProduct = async () => {
@@ -50,7 +49,6 @@ function ThongKe() {
     const queryProduct = useQuery({ queryKey: ['products'], queryFn: getAllProduct })
     const { isLoading: isLoadingProduct, data: products } = queryProduct
 
-    console.log('all user ', products);
     //-----------------------------------------
     const [totalOrders, setTotalOrders] = useState()
     const [totalAmount, setTotalAmount] = useState()
@@ -64,22 +62,19 @@ function ThongKe() {
 
     useEffect(() => {
         let totalOrders1 = orders?.data.length;
-        console.log('tt', totalOrders);
         setTotalOrders(totalOrders1)
 
         let totalAmount1 = orders?.data.reduce((total, order) => total + order.totalPrice, 0);
         setTotalAmount(totalAmount1)
-        console.log('tt', totalAmount);
 
         setTotalUser(users?.data.length)
 
         setTotalProduct(products?.data.length)
 
-    }, [orders])
+    }, [orders, products])
 
     useEffect(() => {
         if (totalOrders && totalAmount && products?.data) {
-            console.log('tttt', totalOrders);
 
             setTest(true);
 
@@ -97,11 +92,7 @@ function ThongKe() {
             dataIndex: 'index',
             rowScope: 'row',
         },
-        // {
-        //     title: 'Mã sản phảm',
-        //     dataIndex: '_id',
 
-        // },
         {
             title: 'Tên sản phẩm',
             dataIndex: 'name',
@@ -130,11 +121,7 @@ function ThongKe() {
             dataIndex: 'index',
             rowScope: 'row',
         },
-        // {
-        //     title: 'Mã sản phảm',
-        //     dataIndex: '_id',
 
-        // },
         {
             title: 'Tên sản phẩm',
             dataIndex: 'name',
@@ -147,8 +134,8 @@ function ThongKe() {
 
         },
         {
-            title: 'Giảm giá',
-            dataIndex: 'discount',
+            title: 'Đã bán',
+            dataIndex: 'selled',
         },
 
         {
@@ -170,11 +157,7 @@ function ThongKe() {
             dataIndex: 'index',
             rowScope: 'row',
         },
-        // {
-        //     title: 'Mã đơn hàng',
-        //     dataIndex: '_id',
 
-        // },
         {
             title: 'Tên khách hàng',
             dataIndex: 'name',
@@ -206,7 +189,6 @@ function ThongKe() {
 
     ];
     const getTopSellingProducts = (products) => {
-        console.log('all@ ', products);
         // Sắp xếp danh sách sản phẩm giảm dần theo số lượng đã bán
         if (products) {
             const sortedProducts = products?.sort((a, b) => b.selled - a.selled);
@@ -231,21 +213,18 @@ function ThongKe() {
         return
 
     }
-    function getTop5ProductsMostInStock(products) {
+    function getProductsAboveStock(products, threshold) {
         if (products) {
-            // Sắp xếp mảng theo countInStock từ nhỏ đến lớn
-            products.sort((a, b) => b.countInStock - a.countInStock);
+            // Lọc ra các sản phẩm có tồn kho lớn hơn ngưỡng
+            const productsAboveStock = products.filter(product => product.countInStock >= threshold);
 
-            // Lấy 5 sản phẩm đầu tiên sau khi đã sắp xếp
-            const top5Products = products.slice(0, 5);
+            // Sắp xếp mảng theo countInStock từ lớn đến nhỏ
+            productsAboveStock.sort((a, b) => b.countInStock - a.countInStock);
 
-            return top5Products;
-
+            return productsAboveStock;
         }
-        return
+        return [];
     }
-    console.log('selled ', getTopSellingProducts(products?.data));
-
     function formatCurrency(number) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
     }
@@ -262,11 +241,14 @@ function ThongKe() {
 
         return formattedDate;
     }
+
     return (
 
         <div className={cx('wrapper')}>
             <h2>Trang quản trị hệ thống website</h2>
             <div className={cx('inner')}>
+
+
                 {
                     isTest &&
                     <div className={cx('statistical')}>
@@ -300,6 +282,7 @@ function ThongKe() {
                         </div>
                     </div>
                 }
+                <Chart />
                 {
                     isTest &&
 
@@ -312,15 +295,10 @@ function ThongKe() {
                                 isLoading={isLoadingProduct}
                                 columns={columns}
                                 dataa={getTopSellingProducts(products?.data)?.map((item, index) => {
-                                    return { ...item, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: `${item.discount}%` }
+                                    return { ...item, selled: item.selled, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: item.discount ? `${item.discount}%` : '0%' }
                                 })}
                                 onRow={(record, rowIndex) => {
-                                    // return {
-                                    //     onClick: (event) => {
-                                    //         setRowSelected(record._id)
-                                    //     }, // click row
 
-                                    // };
                                 }}
                             />
                         </div>
@@ -332,15 +310,10 @@ function ThongKe() {
                                 isLoading={isLoadingProduct}
                                 columns={columnsOrder}
                                 dataa={orders?.data?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5).map((item, index) => {
-                                    return { ...item, key: item._id, index: index + 1, name: item?.shippingAddress?.fullName, date: formatDate(item?.updatedAt) }
+                                    return { ...item, totalPrice: formatCurrency(item.totalPrice), key: item._id, index: index + 1, name: item?.shippingAddress?.fullName, date: formatDate(item?.updatedAt) }
                                 })}
                                 onRow={(record, rowIndex) => {
-                                    // return {
-                                    //     onClick: (event) => {
-                                    //         setRowSelected(record._id)
-                                    //     }, // click row
 
-                                    // };
                                 }}
                             />
                         </div>
@@ -359,15 +332,10 @@ function ThongKe() {
                                 isLoading={isLoadingProduct}
                                 columns={columns3}
                                 dataa={getTop5ProductsLeastInStock(products?.data)?.map((item, index) => {
-                                    return { ...item, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: `${item.discount}%` }
+                                    return { ...item, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: item.discount ? `${item.discount}%` : '0%' }
                                 })}
                                 onRow={(record, rowIndex) => {
-                                    // return {
-                                    //     onClick: (event) => {
-                                    //         setRowSelected(record._id)
-                                    //     }, // click row
 
-                                    // };
                                 }}
                             />
                         </div>
@@ -379,16 +347,11 @@ function ThongKe() {
                                 rowClassName={cx('row')}
                                 isLoading={isLoadingProduct}
                                 columns={columns3}
-                                dataa={getTop5ProductsMostInStock(products?.data).map((item, index) => {
-                                    return { ...item, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: `${item.discount}%` }
+                                dataa={getProductsAboveStock(products?.data, 10).map((item, index) => {
+                                    return { ...item, key: item._id, index: index + 1, name: item?.name, price: formatCurrency(item.price), discount: item.discount ? `${item.discount}%` : '0%' }
                                 })}
                                 onRow={(record, rowIndex) => {
-                                    // return {
-                                    //     onClick: (event) => {
-                                    //         setRowSelected(record._id)
-                                    //     }, // click row
 
-                                    // };
                                 }}
                             />
                         </div>

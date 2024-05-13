@@ -30,12 +30,10 @@ function ThongTinTaiKhoan() {
     const mutation = useMutationHook(
         (data) => {
             const { id, access_token, ...rests } = data
-            console.log('data từ mutauon ', data);
             UserSevice.updateUser(id, data, access_token)
         }
     )
     const { data, isPending, isSuccess, isError } = mutation
-    console.log('data mutation ', data);
 
 
     useEffect(() => {
@@ -57,13 +55,11 @@ function ThongTinTaiKhoan() {
     }, [currentUser])
 
     const handleUpdate = () => {
-        console.log('update--- ', name, email, phone, avatar);
         mutation.mutate({ id: currentUser.id, email, name, phone, avatar, access_token: currentUser.access_token })
     }
     const handleGetDetailsUser = async (id, token) => {
         const res = await UserSevice.getDetailsUser(id, token)
         dispatch(updateUser({ ...res?.data, access_token: token }))
-        console.log('res.data, ', res.data);
     }
     const handleUploadAvatar = async ({ fileList }) => {
         const file = fileList[0]
@@ -72,7 +68,6 @@ function ThongTinTaiKhoan() {
         }
         setAvatar(file.preview)
     }
-    // console.log('avatar  ', avartar);
 
     return (
         <div className={cx('wraper')}>

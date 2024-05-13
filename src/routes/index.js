@@ -9,6 +9,7 @@ import DangNhap from '~/pages/DangNhap';
 import DangKy from '~/pages/DangKy';
 import ThongTinTaiKhoan from '~/pages/TaiKhoan/ThongTinTaiKhoan';
 import QuanLyDonHang from '~/pages/TaiKhoan/QuanLyDonHang';
+import QuanLyDanhGia from '~/pages/TaiKhoan/QuanLyDanhGIa';
 import Admin from '~/pages/Admin';
 import KetQuaTimKiem from '~/pages/KetQuaTimKiem';
 import ProductType from '~/pages/ProductType';
@@ -45,6 +46,8 @@ const publicRoutes = [
 
     { path: '/taikhoan/edit', component: ThongTinTaiKhoan, layout: HeaderOnly },
     { path: '/taikhoan/donhang', component: QuanLyDonHang, layout: HeaderOnly },
+    { path: '/taikhoan/danhgia', component: QuanLyDanhGia, layout: HeaderOnly },
+
 ]
 const privateRoute = [
     { path: '/admin', component: Admin, layout: LayoutAdmin },

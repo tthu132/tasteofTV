@@ -22,6 +22,7 @@ import axios from "axios";
 
 import { axiosJWT } from "~/services/UserService"
 
+
 const { TextArea } = Input;
 
 const cx = classNames.bind(styles)
@@ -31,9 +32,6 @@ function Payment() {
     const order = useSelector((state) => state.order)
     const user = useSelector((state) => state.user)
 
-    console.log('bodyy 203', user);
-    console.log('bodyy 204', order);
-
 
     // const { token } = useSelector((state) => state.user.access_token);
     const [value, setValue] = useState('');
@@ -41,7 +39,6 @@ function Payment() {
     const dispatch = useDispatch()
 
     const priceMemo = useMemo(() => {
-        console.log('momo', order?.orderItemsSlected);
         const result = order?.orderItemsSlected?.reduce((total, cur) => {
             return total + ((cur.price * cur.amount))
         }, 0)
@@ -86,21 +83,27 @@ function Payment() {
     const [infoOrder, setInfoOrder] = useState(false)
     const [stateUserDetail, setStateUserdetail] = useState({
         name: '',
-        email: '',
+
         phone: '',
         isAdmin: false,
         address: '',
-        city: ''
+        detailAddress: '',
+        tinh: '',
+        huyen: '',
+        xa: ''
+
     })
     useEffect(() => {
         if (infoOrder) {
-            console.log('user  ', user);
             setStateUserdetail({
-                city: user?.city,
+
                 name: user?.name,
                 address: user?.address,
                 phone: user?.phone,
-                email: user?.email
+                detailAddress: user?.detailAddress,
+                tinh: user?.tinh,
+                huyen: user?.huyen,
+                xa: user?.xa
             })
         }
     }, [infoOrder])
@@ -127,16 +130,26 @@ function Payment() {
         },
     )
     const { data: dataUpdated, isSuccess: isSuccessUpdated, isError: isErrorUpdated, isPending: isLoadingUpdated } = mutationUpdate
+    const onFinishUpdate = () => {
+        const { name, phone, tinh, huyen, xa, detailAddress } = stateUserDetail
+        if (name && phone) {
+            mutationUpdate.mutate({ id: user.id, token: user.access_token, ...stateUserDetail }, {
+                onSuccess: () => {
+                    dispatch(updateUser({ id: user.id, token: user.access_token, ...stateUserDetail }))
+                    setInfoOrder(false)
+                }
+            });
+        }
+    }
+    const onFinishFailed = () => {
 
-
+    }
     const handleOk = () => {
-        console.log(stateUserDetail);
-        console.log('id update ', user.id);
-        console.log('user update ', user);
 
-
-        const { name, phone, address, city, email } = stateUserDetail
-        if (name && phone && address && city) {
+        onFinishUpdate()
+        onFinishFailed()
+        const { name, phone, tinh, huyen, xa, detailAddress } = stateUserDetail
+        if (name && phone) {
             mutationUpdate.mutate({ id: user.id, token: user.access_token, ...stateUserDetail }, {
                 onSuccess: () => {
                     dispatch(updateUser({ id: user.id, token: user.access_token, ...stateUserDetail }))
@@ -148,9 +161,13 @@ function Payment() {
     const handleCancleUpdate = () => {
         setStateUserdetail({
             name: '',
-            email: '',
+
             phone: '',
             isAdmin: false,
+            detailAddress: '',
+            tinh: '',
+            huyen: '',
+            xa: ''
         })
         form1.resetFields()
         setInfoOrder(false)
@@ -161,9 +178,8 @@ function Payment() {
     }
     //=========================================
     const [delivery, setDelivery] = useState('fast')
-    const [payment, setPayment] = useState('')
+    const [payment, setPayment] = useState('later_money')
 
-    console.log('paymenttt ', payment);
     const handleDilivery = (e) => {
         setDelivery(e.target.value)
     }
@@ -185,7 +201,6 @@ function Payment() {
         if (isSuccess && dataOrder?.status === 'OK') {
             // message.success('Đặt hằng thành cống')
         } else if (isError) {
-            console.log('lỗi');
             message.error()
         }
     }, [isSuccess, isError])
@@ -198,33 +213,31 @@ function Payment() {
 
     const [searchParams] = useSearchParams()
     const params = searchParams?.getAll
-    console.log('params ', searchParams?.get('totalPriceMemo'));
 
 
     useEffect(() => {
-        console.log('params ', searchParams.get('totalPriceMemo'));
 
-        console.log('params ', params);
     }, [params])
 
     const handleAddOrder = () => {
 
         if (user?.access_token && order?.orderItemsSlected && user?.name
-            && user?.address && user?.phone && user?.city && priceMemo && user?.id) {
+            && user?.address && user?.phone && priceMemo && user?.id) {
             // eslint-disable-next-line no-unused-expressions
-            // console.log('bodyyy', {
-            //     token: user?.access_token,
-            //     orderItems: order?.orderItemsSlected,
-            //     fullName: user?.name,
-            //     address: user?.address,
-            //     phone: user?.phone,
-            //     city: user?.city,
-            //     paymentMethod: payment,
-            //     itemsPrice: priceMemo,
-            //     shippingPrice: diliveryPriceMemo,
-            //     totalPrice: totalPriceMemo,
-            //     user: user?.id
-            // });
+            console.log('bodyyy', {
+                token: user?.access_token,
+                orderItems: order?.orderItemsSlected,
+                fullName: user?.name,
+                address: user?.address,
+                phone: user?.phone,
+                detailAddress: user?.detailAddress,
+
+                paymentMethod: payment,
+                itemsPrice: priceMemo,
+                shippingPrice: diliveryPriceMemo,
+                totalPrice: totalPriceMemo,
+                user: user?.id
+            });
 
 
             dispatch(update({
@@ -232,7 +245,7 @@ function Payment() {
                 orderItems: order?.orderItemsSlected,
                 shippingAddress: {
                     address: user?.address,
-                    city: user?.city,
+
                     phone: user?.phone,
 
                 },
@@ -251,13 +264,14 @@ function Payment() {
                         fullName: user?.name,
                         address: user?.address,
                         phone: user?.phone,
-                        city: user?.city,
+
                         paymentMethod: payment,
                         itemsPrice: priceMemo,
                         shippingPrice: diliveryPriceMemo,
                         totalPrice: totalPriceMemo,
                         user: user?.id,
-                        note:value
+                        note: value,
+                        email: user?.email
                     }, {
                     onSuccess: () => {
 
@@ -267,7 +281,6 @@ function Payment() {
                             order?.orderItemsSlected?.forEach(element => {
                                 arrayOrdered.push(element.product)
                             });
-                            console.log('arrayOrdered', arrayOrdered);
                             mutationRemove.mutate({ user: user.id, productList: [...arrayOrdered] });
                             dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }))
 
@@ -289,6 +302,8 @@ function Payment() {
 
 
 
+        } else if (!user.address) {
+            setInfoOrder(true)
         }
     }
 
@@ -296,9 +311,7 @@ function Payment() {
     const addOrderVNPay = async () => {
         try {
             const token = JSON.parse(localStorage.getItem("access_token"));
-            console.log('tokennn ', token);
             if (!token) {
-                console.log("No access token found");
                 return false;
             }
 
@@ -318,7 +331,7 @@ function Payment() {
             return false;
         }
     };
-  
+
 
     return (
         <div className={cx('wrapper')}>
@@ -350,6 +363,7 @@ function Payment() {
 
                         </div>
                         <div className={cx('info')}>
+                            <span className={cx('lable')}>Chi tiết đơn hàng</span>
                             <div>
                                 <span className={cx('lable')}>Ghi chú cho đơn hàng</span>
                                 <TextArea
@@ -364,6 +378,62 @@ function Payment() {
                                 />
                             </div>
 
+                        </div>
+                        <div className={cx('info')}>
+                            <div className={cx('header')}>
+                                <span style={{ display: 'inline-block', width: '390px' }}>
+
+                                    <span> Tất cả ({order?.orderItems?.length} sản phẩm)</span>
+                                </span>
+                                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span>Đơn giá</span>
+                                    <span>Số lượng</span>
+                                    <span>Thành tiền</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={cx('info')}>
+                            <div>
+                                {
+                                    order?.orderItemsSlected && order?.orderItemsSlected.map((item, index) => (
+                                        <div className={cx('item-order')} key={index}>
+
+                                            <div style={{ width: '390px', display: 'flex', alignItems: 'center', gap: 4 }}>
+
+                                                <Images src={item?.image} style={{ width: '150px', height: '90px', objectFit: 'cover' }} />
+                                                <div style={{
+                                                    width: 260,
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+
+                                                }}>{item?.name}</div>
+
+                                            </div>
+
+
+                                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                {/* <span>
+                                                    <span style={{ fontSize: '13px', color: '#242424' }}>{item?.price}-{item.discount}</span>
+                                                </span> */}
+                                                {
+                                                    item.discount ?
+                                                        <div >
+                                                            {/* <p className={cx('old-price')}>{formatCurrency(item?.price)}</p> */}
+                                                            <p>{formatCurrency(item.price - (item?.price * item?.discount) / 100)}</p>
+                                                        </div> : <p >{formatCurrency(item?.price)}</p>
+                                                }
+                                                <p>
+                                                    {item?.amount}
+                                                </p>
+                                                <span style={{ color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500 }}>{formatCurrency((item.price - (item?.price * item?.discount) / 100) * item?.amount)}</span>
+                                            </div>
+
+
+                                        </div>
+                                    ))
+                                }
+
+                            </div>
                         </div>
 
                     </div>
@@ -395,10 +465,10 @@ function Payment() {
                             </div>
 
                             <Button onClick={handleAddOrder} bntOrder style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>ĐẶT HÀNG</Button>
-                            <Button type='button' onClick={addOrderVNPay}>Thanh toán VNPAY</Button>
+                            {/* <Button type='button' onClick={addOrderVNPay}>Thanh toán VNPAY</Button> */}
                             <div className={cx('info-address')}>
                                 <p>Địa chỉ giao hàng:</p>
-                                <span style={{ fontWeight: 'bold' }}>{`${user?.address} ${user?.city}`} </span>
+                                <span style={{ fontWeight: 'bold' }}>{user?.address} </span>
                                 <span onClick={handleChangeAddress} style={{ color: '#9255FD', cursor: 'pointer' }}>Thay đổi</span>
                             </div>
 
@@ -411,6 +481,7 @@ function Payment() {
                     open={infoOrder}
                     onOk={handleOk}
                     onCancel={handleCancleUpdate}
+                    footer={null}
                 >
                     <Loading isLoading={isLoadingUpdated}>
                         < Form
@@ -426,7 +497,8 @@ function Payment() {
                             }}
 
                             autoComplete="on"
-
+                            onFinish={onFinishUpdate}
+                            onFinishFailed={onFinishFailed}
                             form={form1}
 
                         >
@@ -444,7 +516,7 @@ function Payment() {
                             </Form.Item>
 
 
-                            <Form.Item
+                            {/* <Form.Item
                                 label="Email"
                                 name="email"
                                 rules={[
@@ -456,7 +528,7 @@ function Payment() {
                             >
                                 <Input value={stateUserDetail.email} onChange={handleOnChangeDetail} name="email" />
 
-                            </Form.Item>
+                            </Form.Item> */}
                             <Form.Item
                                 label="Số điện thoại"
                                 name="phone"
@@ -471,31 +543,68 @@ function Payment() {
 
                             </Form.Item>
                             <Form.Item
-                                label="Thành phố"
-                                name="city"
+                                label="Tỉnh/Thành Phố"
+                                name="tinh"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Vui lòng nhập thành phố',
+                                        message: 'Vui lòng nhập tỉnh',
                                     },
                                 ]}
                             >
-                                <Input value={stateUserDetail.city} onChange={handleOnChangeDetail} name="city" />
+                                <Input value={stateUserDetail.tinh} onChange={handleOnChangeDetail} name="tinh" />
 
                             </Form.Item>
                             <Form.Item
-                                label="Địa chỉ giao hàng"
-                                name="address"
+                                label="Quận/Huyện"
+                                name="huyen"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Vui lòng nhập địa chỉ giao hàng!',
+                                        message: 'Vui lòng nhập huyện/thành phố',
                                     },
                                 ]}
                             >
-                                <Input value={stateUserDetail.address} onChange={handleOnChangeDetail} name="address" />
+                                <Input value={stateUserDetail.huyen} onChange={handleOnChangeDetail} name="huyen" />
 
                             </Form.Item>
+                            <Form.Item
+                                label="Xã/Phường"
+                                name="xa"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập xã/phường',
+                                    },
+                                ]}
+                            >
+                                <Input value={stateUserDetail.xa} onChange={handleOnChangeDetail} name="xa" />
+
+                            </Form.Item>
+                            <Form.Item
+                                label="Đường/Ấp/Sô Nhà"
+                                name="detailAddress"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập địa chỉ cụ thể',
+                                    },
+                                ]}
+                            >
+                                <Input value={stateUserDetail.detailAddress} onChange={handleOnChangeDetail} name="detailAddress" />
+
+                            </Form.Item>
+                            <Form.Item
+                                wrapperCol={{
+                                    offset: 8,
+                                    span: 16,
+                                }}
+                            >
+                                <Button btnBuy type="primary" htmlType="submit">
+                                    Cập nhật
+                                </Button>
+                            </Form.Item>
+
 
                         </Form>
                     </Loading>

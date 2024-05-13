@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { publicRoutes, privateRoute } from './routes';
 import { DefaultLayout, HeaderOnly } from '~/Layout';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment } from './redux/slice/counterSlice'
@@ -16,14 +16,32 @@ import { jwtDecode } from "jwt-decode";
 import { updateUser } from '~/redux/slice/userSlide';
 import NotFoundPage from '~/pages/NotFoundPage';
 
+import KommunicateChat from './chatbot';
 
+import Dictaphone from './Dictaphone'
 
+import Translator from './components/Translator';
+import useAlan from './hooks/useAlan';
+import { Button } from 'antd';
+
+import alanBtn from "@alan-ai/alan-sdk-web";
 
 function App() {
+
+
+
+  // const btnAlan = useAlan()
+  // const handleAlan = () => {
+  //   btnAlan.activate();
+  //   // Calling the project API method on button click
+  //   btnAlan.callProjectApi("greetUser", {
+  //     user: 'John Smith'
+  //   }, function (error, result) { });
+  // }
+
+
   const count = useSelector((state) => state?.counter?.value)
   const user = useSelector((state) => state.user)
-  console.log('user admin ', user.isAdmin);
-  console.log('user admin ', user);
 
   const dispatch = useDispatch()
 
@@ -31,7 +49,6 @@ function App() {
 
     const { storgeData, decoded } = handleDecoded()
 
-    console.log('store:  ', storgeData, decoded);
 
     if (decoded?.id)
       handleGetDetailUser(decoded?.id, storgeData)
@@ -39,7 +56,7 @@ function App() {
 
 
   }, [])
-  
+
 
   const handleDecoded = () => {
     let storgeData = localStorage.getItem('access_token')
@@ -110,10 +127,26 @@ function App() {
 
           })}
 
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
 
       </div>
+
+
+
+      <div className="chat-icon-container" >
+
+        <Translator className="chat-icon" />
+      </div>
+{/* 
+      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+      <df-messenger
+        intent="WELCOME"
+        chat-title="stateofTV"
+        agent-id="6d477915-1783-402e-8ee8-b2e54f8d2fc1"
+        language-code="vi"
+      ></df-messenger> */}
+
+
     </Router>
   );
 }

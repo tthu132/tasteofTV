@@ -12,7 +12,6 @@ export const createProductCatogory = async (data) => {
 }
 
 export const updateProductCatogory = async (id, data) => {
-    console.log('check ', id);
 
 
     const res = await axiosJWT.put(`${process.env.REACT_APP_API_KEY}/blog/update/${id}`, data)

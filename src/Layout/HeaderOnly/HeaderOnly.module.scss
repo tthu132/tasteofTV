@@ -20,3 +20,10 @@
 .container {
     padding: 0 30px;
 }
+
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {
+    .inner {
+        width: 100%
+    }
+
+}

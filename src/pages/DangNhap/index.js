@@ -39,12 +39,10 @@ function FormLogin() {
 
 
             // handleCloseForm()
-            console.log('data login ', data);
             localStorage.setItem('access_token', JSON.stringify(data?.access_token))
 
             if (data?.access_token) {
                 const decode = jwtDecode(data?.access_token)
-                console.log('decode ', decode);
                 if (decode?.id)
                     handleGetDetailUser(decode?.id, data?.access_token)
             }
@@ -61,7 +59,6 @@ function FormLogin() {
 
         const res = await UserSevice.getDetailsUser(id, token)
         dispatch(updateUser({ ...res?.data, access_token: token }))
-        console.log('check: ', { ...res?.data, access_token: token });
     }
 
     const handleSubmit = () => {

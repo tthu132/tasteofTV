@@ -113,7 +113,7 @@ function QuanLyTaiKhoan() {
                     >
                         Reset
                     </Button>
-                   
+
                 </Space>
             </div>
         ),
@@ -131,7 +131,7 @@ function QuanLyTaiKhoan() {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-      
+
     });
     const mutation = useMutationHook(
         (data) => {
@@ -185,7 +185,6 @@ function QuanLyTaiKhoan() {
     const fetchAllUser = async () => {
 
         const res = await UserService.getAllUser()
-        console.log('userrr ', res);
 
         return res
     }
@@ -212,8 +211,8 @@ function QuanLyTaiKhoan() {
 
                 if (images) {
                     setImageQQ(images.map(image => ({
-                        uid: image._id,
-                        url: image.image,
+                        uid: image?._id,
+                        url: image?.image,
                         name: ''
                     })));
                 }
@@ -226,12 +225,10 @@ function QuanLyTaiKhoan() {
 
 
     useEffect(() => {
-        console.log('state after update: ', stateUserDetail);
         const setValues = () => {
             if (form1 && stateUserDetail) {
                 Object.entries(stateUserDetail).forEach(([key, value]) => {
                     form1.setFieldValue(key, value);
-                    console.log('key-value', key, value);
                 });
             }
         };
@@ -392,7 +389,6 @@ function QuanLyTaiKhoan() {
 
     const onFinishUpdate = () => {
 
-        console.log('user update ', stateUserDetail);
 
         mutationUpdate.mutate({ id: rowSelected, token: user.access_token, ...stateUserDetail }, {
             onSettled: () => {
@@ -471,8 +467,6 @@ function QuanLyTaiKhoan() {
         // Chờ tất cả các promise được giải quyết
         const previews = await Promise.all(base64Promises);
         setImageUpdate(previews)
-        console.log("image update 1", previews);
-        console.log("image update 2", imageUpdate);
 
 
 
@@ -482,7 +476,6 @@ function QuanLyTaiKhoan() {
 
     }
     const handleDeleteProduct = () => {
-        console.log('bodyyy ', { id: rowSelected, token: user.access_token });
         mutationDelete.mutate({ id: rowSelected, token: user.access_token }, {
             onSettled: () => {
                 queryUser.refetch()
@@ -530,7 +523,6 @@ function QuanLyTaiKhoan() {
 
 
     const onCloseDetail = () => {
-        console.log('cloooo');
         setIsOpenDrawer(false)
         setStateUserdetail({
             name: '',

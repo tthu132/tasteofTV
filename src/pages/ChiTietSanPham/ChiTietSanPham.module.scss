@@ -4,7 +4,7 @@
     grid-template-columns: 1fr 2fr;
     gap: 40px;
     margin: 20px 0;
-    min-height: 500px;
+    min-height: 700px;
     background-color: #F5F5FA;
     padding: 8px;
     // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5)
@@ -68,4 +68,16 @@
 .price {
     color: rgb(254, 44, 85);
     margin: 10px 0;
+}
+
+.action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 350px;
+}
+
+.old-price {
+    text-decoration: line-through;
+
 }

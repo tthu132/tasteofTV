@@ -15,16 +15,12 @@ import * as message from '~/components/Message'
 const cx = classNames.bind(styles)
 
 function OrderList({ data }) {
-    console.log('dataList ', data);
-    // console.log('dataList ', data[0]._id);
     const location = useLocation()
     const { state } = location
     const navigate = useNavigate()
 
-    console.log('tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ', state);
 
     const handleDetailOrder = (id) => {
-        console.log(id);
         navigate(`/detail-order/${id}`, {
             state: {
                 token: state?.token
@@ -34,13 +30,6 @@ function OrderList({ data }) {
     }
 
 
-    // const mutation = useMutationHook(
-    //     (data) => {
-    //         const { id, token, orderItems, userId } = data
-    //         const res = OrderService.cancelOrder(id, token, orderItems, userId)
-    //         return res
-    //     }
-    // )
     const handleCancelOrder = (id) => {
         // mutation.mutate({ id: order._id, token: state?.token, orderItems: order?.orderItems, userId: user.id }, {
         //     onSuccess: () => {

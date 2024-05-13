@@ -28,7 +28,6 @@ function FormRegister({ formDN, handleCloseFormRegister, openLogin }) {
     const [passConf, setPassConf] = useState('')
 
     const mutation = useMutationHook(data => UserSevice.signupUser(data))
-    console.log('muatation ', mutation);
 
 
     const { data, isPending, isSuccess, isError } = mutation

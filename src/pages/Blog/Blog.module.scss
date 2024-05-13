@@ -1,6 +1,6 @@
 .wrapper {
     width: var(--default-layout-wight);
-
+    min-height: 1000px
 }
 
 .item-blog {
@@ -81,5 +81,63 @@
         // border: 1px solid #f5faf1;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 
+    }
+}
+
+.action-comment {
+    display: flex;
+    flex-direction: row;
+    color: gray;
+    cursor: pointer;
+
+    justify-content: flex-end;
+
+    h4 {
+        margin-left: 15px;
+    }
+
+
+}
+
+.create-comment,
+.create-comment-rep {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 20px;
+    position: relative;
+    align-items: center;
+
+    input {
+        border: none;
+        background-color: #F5F5F5;
+        padding: 15px;
+        border-radius: 20px;
+        width: 100%;
+        min-height: 40px;
+        margin-left: 10px;
+        font-size: 14px;
+
+    }
+}
+
+.create-comment-rep {
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+
+
+
+/* Responsive cho máy tính bảng */
+@media only screen and (min-width: 46.25em) and (max-width: 70.9375em) {
+    .wrapper {
+        width: 100%
+    }
+}
+
+/* Responsive cho điện thoại */
+@media only screen and (max-width: 46.25em) {
+    .wrapper {
+        width: 100%;
     }
 }

@@ -13,6 +13,9 @@ const cx = classNames.bind(styles)
 function Admin() {
     const [activeMenuItem, setActiveMenuItem] = useState('');
 
+    localStorage.removeItem('itemAdd');
+    localStorage.removeItem('itemBuyNow');
+
     const handleMenuClick = (title) => {
         setActiveMenuItem(title); // Lưu title của menu đang được chọn
     };

@@ -79,7 +79,6 @@ function QuanLyBlog() {
 
     const { isPending: isLoadingProduct, data: product } = queryProduct
 
-    // console.log('dataBlog', product?.data[0].firstImage);
     const fetchProductBlog = async () => {
 
         const res = await BlogService.getAllProductCatogory()
@@ -108,7 +107,6 @@ function QuanLyBlog() {
             let api = 'https://api.cloudinary.com/v1_1/dgrzr3uqm/video/upload';
             const res = await axios.post(api, formData)
             const { secure_url } = res.data
-            console.log('secure-url', secure_url);
             return secure_url
         } catch (error) {
             console.error('Error uploading video:', error);
@@ -118,7 +116,6 @@ function QuanLyBlog() {
     }
     const onFinish = async () => {
         const urlVideo = await uploadFile()
-        console.log('urlVideo', urlVideo);
 
         mutation.mutate({ ...stateBlog, title: text, video: urlVideo }, {
             onSuccess: () => {
@@ -251,7 +248,6 @@ function QuanLyBlog() {
 
     const fetchDetailBlog = async () => {
         const res = await BlogService.getDetailsOrder(rowSelected);
-        console.log('kiemtra 01', res.data);
 
         if (res.data) {
             setStateDetailBlog({
@@ -261,7 +257,6 @@ function QuanLyBlog() {
                 productName: res?.productName
 
             })
-            console.log('kiemtra 0111111111', stateDetailBlog);
 
         }
 
@@ -319,7 +314,6 @@ function QuanLyBlog() {
         })
     }
     const onCloseDetail = () => {
-        console.log('cloooo');
         setIsOpenDrawer(false)
         setStateBlog({
             title: '',
@@ -332,7 +326,6 @@ function QuanLyBlog() {
         form1.resetFields()
 
     }
-    console.log('kiemtra 01', stateDetailBlog);
     useEffect(() => {
         if (isSuccessUpdated) {
             message.success()

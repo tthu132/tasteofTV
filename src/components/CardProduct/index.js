@@ -22,15 +22,14 @@ function CardProduct({ listProduct }) {
 
 
     const handleDetailsProduct = (id) => {
-        console.log('idprodcut', id);
         // navigate(`/product/${id}`)
     }
     useEffect(() => {
         const fetchImages = async () => {
             if (listProduct?.idsImage?.length > 0) {
-                const imageRequests = listProduct.idsImage.map(async id => {
+                const imageRequests = listProduct?.idsImage.map(async id => {
                     const res = await ImageService.getDetailsImage(id);
-                    return res.data.image;
+                    return res.data?.image;
                 });
                 const images = await Promise.all(imageRequests);
                 setImageList(images);
@@ -49,7 +48,6 @@ function CardProduct({ listProduct }) {
     const { data, isSuccess, isError, isPending: isPendingCard } = mutation
 
     const handleOrderAdd = () => {
-        console.log('jedheu', user);
         if (!user?.id) {
             navigate('/login', { state: location?.pathname })
         } else {

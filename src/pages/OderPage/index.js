@@ -26,21 +26,17 @@ function OrderPage() {
     const navigate = useNavigate()
     const order = useSelector((state) => state.order)
     const user = useSelector((state) => state.user)
-    console.log('bodyy 20', user);
-    console.log('bodyy 202', order);
     const [listChecked, setListChecked] = useState([])
 
     const dispatch = useDispatch()
 
-    console.log('order ', order);
-
-    const saveCartToLocalStorage = (order) => {
-        localStorage.setItem(`order${user.id}`, JSON.stringify(order));
-    };
-    useEffect(() => {
-        // Lưu giỏ hàng vào localStorage khi có sự thay đổi trong Redux
-        saveCartToLocalStorage(order);
-    }, [order]);
+    // const saveCartToLocalStorage = (order) => {
+    //     localStorage.setItem(`order${user.id}`, JSON.stringify(order));
+    // };
+    // useEffect(() => {
+    //     // Lưu giỏ hàng vào localStorage khi có sự thay đổi trong Redux
+    //     saveCartToLocalStorage(order);
+    // }, [order]);
 
     const handleOnchangeCheckAll = (e) => {
         if (e.target.checked) {
@@ -64,16 +60,12 @@ function OrderPage() {
 
 
     }
-    console.log('checked ', listChecked);
     const mutation = useMutationHook(
         (data) => {
             CardService.updateCard(data)
         }
     )
     const handleChangeCount = (type, idProduct, index) => {
-        console.log('checkkk id pr ', idProduct);
-        console.log('counter 1', order?.orderItems[index]?.amount);
-        console.log('counter 1', order?.orderItems[index]?.countInstock);
 
 
         if (type === 'increase' && order?.orderItems[index]?.amount < order?.orderItems[index]?.countInstock) {
@@ -87,7 +79,6 @@ function OrderPage() {
 
 
     }
-    console.log('orderNe ', order);
     const mutationRemove = useMutationHook(
         (data1) => {
             CardService.deleteCard(data1);
@@ -100,21 +91,17 @@ function OrderPage() {
 
     }
     const handleRomveAll = () => {
-        console.log('removeeee', listChecked.length);
         if (listChecked?.length > 1) {
-            console.log('removeeee');
             mutationRemove.mutate({ user: user.id, productList: [...listChecked] });
             dispatch(removeAllOrderProduct({ listChecked }))
         }
     }
     useEffect(() => {
-        console.log('list-checked 1', listChecked);
         dispatch(selectedOrder({ listChecked }))
     }, [listChecked])
 
 
     const priceMemo = useMemo(() => {
-        console.log('momo', order?.orderItemsSlected);
         const result = order?.orderItemsSlected?.reduce((total, cur) => {
             return total + ((cur.price * cur.amount))
         }, 0)
@@ -203,10 +190,7 @@ function OrderPage() {
     const { data: dataUpdated, isSuccess: isSuccessUpdated, isError: isErrorUpdated, isPending: isLoadingUpdated } = mutationUpdate
 
     const handleOrder = () => {
-        console.log('dathang ', user);
-        if (!user.address) {
-            setInfoOrder(true)
-        } else if (!order?.orderItemsSlected?.length) {
+        if (!order?.orderItemsSlected?.length) {
             message.error('Vui lòng chọn sản phẩm !')
         } else {
             navigate('/payment')
@@ -214,7 +198,6 @@ function OrderPage() {
     }
 
     const handleOk = () => {
-        console.log(stateUserDetail);
         const { name, phone, address, city } = stateUserDetail
         if (name && phone && address && city) {
             mutationUpdate.mutate({ id: user.id, token: user.access_token, ...stateUserDetail }, {
@@ -298,9 +281,16 @@ function OrderPage() {
 
                                 </div>
                                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <span>
-                                        <span style={{ fontSize: '13px', color: '#242424' }}>{item?.price}-{item.discount}</span>
-                                    </span>
+                                    {/* <span>
+                                        <span style={{ fontSize: '13px', color: '#242424' }}>{item?.price}</span>
+                                    </span> */}
+                                    {
+                                        item.discount ?
+                                            <div >
+                                                <p className={cx('old-price')}>{formatCurrency(item?.price)}</p>
+                                                <p>{formatCurrency(item.price - (item?.price * item?.discount) / 100)}</p>
+                                            </div> : <p >{formatCurrency(item?.price)}</p>
+                                    }
                                     <div className={cx('counter-order')}>
                                         <button style={{ height: '30px', border: 'none', width: '45px', background: 'transparent', cursor: 'pointer' }} onClick={() => handleChangeCount('decrease', item?.product, index)}>
                                             <MinusOutlined style={{ color: '#000', fontSize: '10px' }} />
@@ -310,7 +300,7 @@ function OrderPage() {
                                             <PlusOutlined style={{ color: '#000', fontSize: '10px' }} />
                                         </button>
                                     </div>
-                                    <span style={{ color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500 }}>{(item?.price * item?.amount)}</span>
+                                    <span style={{ color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500 }}>{formatCurrency((item.price - (item?.price * item?.discount) / 100) * item?.amount)}</span>
                                     <DeleteOutlined style={{ cursor: 'pointer' }} onClick={() => handleDeleteOrder(item?.product)} />
                                 </div>
 
@@ -348,11 +338,11 @@ function OrderPage() {
                         </div>
 
                         <Button onClick={handleOrder} bntOrder style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>MUA HÀNG</Button>
-                        <div className={cx('info-address')}>
+                        {/* <div className={cx('info-address')}>
                             <p>Địa chỉ giao hàng:</p>
                             <span style={{ fontWeight: 'bold' }}>{`${user?.address} ${user?.city}`} </span>
                             <span onClick={handleChangeAddress} style={{ color: '#9255FD', cursor: 'pointer' }}>Thay đổi</span>
-                        </div>
+                        </div> */}
 
                     </div>
 

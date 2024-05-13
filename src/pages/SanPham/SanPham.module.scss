@@ -1,0 +1,12 @@
+.wrapper {
+    width: var(--default-layout-wight);
+
+    min-height: 750px;
+
+}
+
+.inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 30px;
+}

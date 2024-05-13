@@ -12,30 +12,29 @@ import { BackTop } from 'antd';
 import * as ProductCategoryService from '~/services/ProductCatogoryService '
 import { useState } from "react";
 import Loading from "~/components/Loading";
+import ProductSlider from "~/components/ProductSlider";
+import { ThunderboltFilled, } from "@ant-design/icons";
 
 
 const cx = classNames.bind(styles)
 function Home() {
 
-    const [limit, setLimit] = useState(6)
+    const [limit, setLimit] = useState(11)
 
     const fetchProductAll = async (context) => {
 
         const limit = context?.queryKey && context?.queryKey[1]
-        console.log('limit 1 ', limit);
         const res = await ProductService.getAllProduct(null, limit)
         return res
     }
     const fetchCatoAll = async () => {
         const res = await ProductCategoryService.getAllProductCatogory()
-        console.log('rescato ', res.data);
         return res.data
     }
 
     const { isPending, data, isPreviousData, } = useQuery({ queryKey: ['product', limit], queryFn: fetchProductAll, retry: 3, retryDelay: 1000, keepPreviousData: true })
     const { isPending: isPendingCato, data: dataCato } = useQuery({ queryKey: ['catogory'], queryFn: fetchCatoAll, retry: 3, retryDelay: 1000 })
 
-    console.log('total ', data);
     const arrCategogy = [
         { title: 'Sản Phẩm Chế Biến', src: '/sanphamchebien', imageCategory: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' },
         { title: 'Nông Sản', src: '/nongsan', imageCategory: 'https://tokyolife.vn/_next/image?url=https%3A%2F%2Fpm2ec.s3.ap-southeast-1.amazonaws.com%2Fcms%2F17007233280237472_512.jpg&w=1200&q=75' }
@@ -48,19 +47,27 @@ function Home() {
 
 
     const handleLoadMore = () => {
-        setLimit(prevLimit => prevLimit + 6);
+        setLimit(prevLimit => prevLimit + 10);
     };
 
     return (
-        <Loading isLoading={isPending}>
+        <Loading isLoading={false}>
             <div className={cx('wrapper')} >
                 <div>
                     <BackTop />
 
 
                 </div>
-                <div>Home</div>
+                {/* <div>Home</div> */}
                 <SliderComponent arrImages={[...images.slider]}></SliderComponent>
+
+                <div className={cx('box-sale')} >
+                    <div className={cx('title')}>
+                        <ThunderboltFilled style={{ color: 'gold', fontSize: '36px', margin: '5px' }} />
+                        <h4>Siêu giảm giá</h4>
+                    </div>
+                    <ProductSlider products={data?.data} />
+                </div>
 
                 {/* <BoxCategory item={titleCategory}>
                 {arrCategogy.map((item, index) => {
@@ -72,32 +79,32 @@ function Home() {
 
             </BoxCategory> */}
 
-                {dataCato && dataCato.map((item, index) => {
-                    return (
+                {dataCato && dataCato.map((categoryItem, categoryIndex) => {
+                    // Lọc những sản phẩm có categoryName trùng với tên của danh mục sản phẩm
+                    const filteredProducts = data && data?.data.filter(productItem => productItem?.categoryName === categoryItem?.name);
 
+                    return (
                         <BoxCategory
                             onLoadMore={handleLoadMore}
-                            item={item}
-                            key={index}
+                            item={categoryItem}
+                            key={categoryIndex}
                             isLoading={isPending}
                             check={data?.total === data?.data?.length}
                         >
-                            {data && data.data.map((item, index) => {
+                            {filteredProducts?.map((productItem, productIndex) => {
                                 return (
                                     <CardProduct
-                                      
-                                        listProduct={item}
-                                        key={index}></CardProduct>
+                                        listProduct={productItem}
+                                        key={productIndex}
+                                    ></CardProduct>
                                 )
                             })}
-
                         </BoxCategory>
-
                     )
                 })}
 
             </div>
-        </Loading>
+        </Loading >
     );
 }
 

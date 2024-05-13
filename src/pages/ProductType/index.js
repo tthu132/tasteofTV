@@ -18,13 +18,10 @@ function ProductType() {
 
     const fetchType = async () => {
         const res = await ProductService.getType(key);
-        console.log('abc ', res);
         setList(res.data)
         return res.data
     }
     const { isPending, data } = useQuery({ queryKey: ['product-type'], queryFn: fetchType, enabled: !!key })
-    // console.log('datwakey ', data.data);
-    console.log('datwakey ', data);
 
 
 

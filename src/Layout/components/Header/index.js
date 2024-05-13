@@ -26,7 +26,7 @@ import { UseDispatch, useDispatch } from 'react-redux';
 import * as CardService from '~/services/CardService'
 import { useQuery } from '@tanstack/react-query';
 import { updateOrderProduct } from '~/redux/slice/orderSlice';
-
+import KommunicateChat from '~/chatbot';
 const cx = classNames.bind(styles)
 
 
@@ -47,12 +47,10 @@ function Header() {
 
   useEffect(() => {
     setName(currentUser.name)
-    console.log('curent ', currentUser);
 
     if (currentUser?.id) {
       const fetchCart = async () => {
         const res = await CardService.getCard(currentUser.id);
-        console.log('datacart ', res.data);
 
 
         dispatch(updateOrderProduct({
@@ -97,15 +95,18 @@ function Header() {
     setShowFormLogin(!showFormLogin)
   }
 
+  let checkLogout = false
   const handleLogout = async () => {
     await UserService.logoutUser()
     localStorage.removeItem('access_token');
+    checkLogout = true
     dispatch(resetUser())
 
   }
 
   return (
     <header className={cx('wrapper')}>
+      <KommunicateChat checkLogout={checkLogout}></KommunicateChat>
       <div className={cx('inner')}>
 
         <div className={cx('header-left')}>

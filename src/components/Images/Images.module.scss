@@ -9,6 +9,11 @@
     width: 100%;
 }
 
+.imageDetail {
+    min-width: 380px;
+    height: 340px;
+}
+
 .Product {
     width: 150px;
     height: 200px;
@@ -28,17 +33,36 @@
     border: 2px solid #99b689;
 }
 
+.AvatarSmall {
+    width: 70px;
+    height: 70px;
+    border-radius: 999px;
+    padding: 5px;
+    border: 2px solid #99b689;
+}
+
+.AvatarComment {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+
+    border: 2px solid #99b689;
+}
+
 .ProductAdmin {
     width: 100px;
 }
 
 .imageSmall {
     padding: 5px;
+    width: 70px;
+    height: 80px;
     // border: 1px solid gray;
     margin-right: 5px;
 }
 
-.Small {
+.Small,
+.livechat {
     width: 50px;
 }
 
@@ -69,4 +93,12 @@
 
 .Total {
     width: 60px;
+}
+
+.test {
+    height: 550px;
+}
+
+.HDSD {
+    // width: 500px;
 }

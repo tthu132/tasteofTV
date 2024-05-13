@@ -20,17 +20,21 @@
  }
 
  html {
-    font-size: 62.5%;
+    font-size: 68%;
 
  }
 
  body {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-style: normal;
-    font-size: 1.6rem;
-    line-height: 1.5;
+    font-size: 1.75rem;
+    //  line-height: 1.5;
 
 
+ }
+
+ span {
+    font-size: 16px !important;
  }
 
  button,
@@ -49,36 +53,35 @@
     list-style: none;
  }
 
- //scollbar
- //  html ::-webkit-scrollbar {
- //     border-radius: 0px;
- //     width: 8px;
- //  }
+ scollbar html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+ }
 
- //  html *::-webkit-scrollbar {
- //     border-radius: 0;
- //     width: 8px;
- //  }
+ html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+ }
 
- //  html ::-webkit-scrollbar-thumb {
- //     border-radius: 4px;
- //     background-color: rgba(255, 255, 255, 0.08);
- //  }
+ html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.08);
+ }
 
- //  html *::-webkit-scrollbar-thumb {
- //     border-radius: 4px;
- //     background-color: rgba(255, 255, 255, .08);
- //  }
+ html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, .08);
+ }
 
- //  html ::-webkit-scrollbar-track {
- //     border-radius: 0px;
- //     background-color: rgba(0, 0, 0, 0);
- //  }
+ html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+ }
 
- //  html *::-webkit-scrollbar-track {
- //     border-radius: 0;
- //     background-color: rgba(0, 0, 0, 0);
- //  }
+ html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+ }
 
 
 
@@ -120,5 +123,142 @@
        margin: 0 !important;
        padding: 0 !important;
        overflow: hidden;
+    }
+ }
+
+ .chat-icon-container {
+    position: fixed;
+    top: 150px;
+    /* Điều chỉnh vị trí dưới cùng */
+    right: 20px;
+    /* Điều chỉnh vị trí bên phải */
+    z-index: 1000;
+    /* Đảm bảo icon hiển thị trên các phần khác của trang */
+ }
+
+ .chat-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    /* Màu nền của icon */
+    color: #fff;
+    /* Màu chữ của icon */
+    border-radius: 50%;
+    /* Đảm bảo icon là hình tròn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    /* Đổ bóng cho icon */
+ }
+
+ .slick-arrow.slick-prev {
+    left: 12px;
+    top: 50%;
+    z-index: 10;
+
+    &::before {
+       font-size: 40px;
+       color: #fff;
+    }
+ }
+
+ .slick-arrow.slick-next {
+    right: 28px;
+    top: 50%;
+    z-index: 10;
+
+    &::before {
+       font-size: 40px;
+       color: #fff;
+    }
+ }
+
+ .slick-dots {
+    z-index: 10;
+    bottom: -2px !important;
+
+    li {
+       button {
+          &::before {
+             color: rgb(255, 255, 0.5);
+          }
+       }
+    }
+
+    li.active {
+       button {
+          &::before {
+             color: #fff;
+          }
+       }
+    }
+ }
+
+ button.ant-btn.css-dev-only-do-not-override-1xg9z9n.ant-btn-default.Products_sale__nLqWz {
+    padding: 4px;
+    background: rgb(255, 219, 222);
+    border-radius: 4px;
+    color: rgb(255, 66, 78);
+
+    line-height: 150%;
+    border: none;
+
+    h4 {
+       font-weight: 800;
+       font-size: 13px;
+
+    }
+
+ }
+
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-modal .ant-modal-content {
+    width: 700px;
+    font-size: 30px;
+ }
+
+ :where(.css-dev-only-do-not-override-1xg9z9n).ant-modal .ant-modal-title {
+
+    padding: 10px 0 20px 0;
+    text-align: center;
+    font-size: 24px;
+ }
+
+
+ @media only screen and (min-width: 46.25em) and (max-width: 70.9375em) {
+    body {
+       font-family: "M PLUS Rounded 1c", sans-serif;
+       font-style: normal;
+       font-size: 1.65rem;
+       //  line-height: 1.5;
+
+
+    }
+
+    html {
+       font-size: 52%;
+
+    }
+
+    .chat-icon {}
+
+    .chat-icon-container {}
+ }
+
+ /* Responsive cho điện thoại */
+ @media only screen and (max-width: 46.25em) {
+    body {
+       font-family: "M PLUS Rounded 1c", sans-serif;
+       font-style: normal;
+       font-size: 1.55rem;
+       //  line-height: 1.5;
+
+
+    }
+
+    html {
+       font-size: 48%;
+
     }
  }

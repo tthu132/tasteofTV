@@ -36,7 +36,8 @@ function QuanLySanPham() {
         idProductCategory: '',
         idsImage: [],
         discount: '',
-        donvi: ''
+        donvi: '',
+        exp: ''
 
     })
     const [stateProductDetail, setStateProductdetail] = useState({
@@ -47,7 +48,8 @@ function QuanLySanPham() {
         idProductCategory: '',
         idsImage: [],
         discount: '',
-        donvi: ''
+        donvi: '',
+        exp: ''
     })
     const [rowSelected, setRowSelected] = useState('')
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -65,7 +67,6 @@ function QuanLySanPham() {
     const { Option } = Select;
 
     const user = useSelector((state) => state.user)
-    console.log('user ', user);
 
     const renderAction = () => {
         return (
@@ -168,20 +169,7 @@ function QuanLySanPham() {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-        // render: (text) =>
-        //     searchedColumn === dataIndex ? (
-        //         <Highlighter
-        //             highlightStyle={{
-        //                 backgroundColor: '#ffc069',
-        //                 padding: 0,
-        //             }}
-        //             searchWords={[searchText]}
-        //             autoEscape
-        //             textToHighlight={text ? text.toString() : ''}
-        //         />
-        //     ) : (
-        //         text
-        //     ),
+
     });
     const mutation = useMutationHook(
         (data) => {
@@ -270,7 +258,8 @@ function QuanLySanPham() {
                 idProductCategory: res.data.idProductCategory,
                 idsImage: res.data.idsImage || [],
                 discount: res.data.discount,
-                donvi: res.data.donvi
+                donvi: res.data.donvi,
+                exp: res.data.exp
                 // Thiết lập mặc định là một mảng trống nếu idsImage không tồn tại
             });
 
@@ -283,8 +272,8 @@ function QuanLySanPham() {
 
                 if (images) {
                     setImageQQ(images.map(image => ({
-                        uid: image._id,
-                        url: image.image,
+                        uid: image?._id,
+                        url: image?.image,
                         name: ''
                     })));
                 }
@@ -297,12 +286,10 @@ function QuanLySanPham() {
 
 
     useEffect(() => {
-        console.log('state after update: ', stateProductDetail);
         const setValues = () => {
             if (form1 && stateProductDetail) {
                 Object.entries(stateProductDetail).forEach(([key, value]) => {
                     form1.setFieldValue(key, value);
-                    console.log('key-value', key, value);
                 });
             }
         };
@@ -368,8 +355,8 @@ function QuanLySanPham() {
             sorter: (a, b) => a.price - b.price
         },
         {
-            title: 'Loại',
-            dataIndex: 'type',
+            title: 'Số lượng',
+            dataIndex: 'countInStock',
         },
         {
             title: 'Action',
@@ -411,7 +398,8 @@ function QuanLySanPham() {
             idProductCategory: '',
             idsImage: '',
             discount: '',
-            donvi: ''
+            donvi: '',
+            exp: ''
         })
 
         form.resetFields()
@@ -432,7 +420,8 @@ function QuanLySanPham() {
             idProductCategory: '',
             idsImage: [],
             discount: '',
-            donvi: ''
+            donvi: '',
+            exp: ''
 
         })
 
@@ -474,6 +463,8 @@ function QuanLySanPham() {
                         });
                     }
                 }
+                queryProduct.refetch();
+
             },
             onError: (error) => {
                 console.error('Error during mutation:', error);
@@ -495,15 +486,12 @@ function QuanLySanPham() {
 
 
     const onFinishUpdate = () => {
-        console.log('image update ', imageUpdate);
 
-        console.log('idddd 0', stateProductDetail);
 
         if (imageUpdate) {
             mutationImage.mutate(imageUpdate, {
                 onSuccess: (dataImage) => {
                     if (dataImage && dataImage.length > 0) {
-                        console.log('image update steate dataImag ', dataImage);
 
                         const mangId = dataImage.map(item => item.data._id);
                         setStateProductdetail(prevState => ({
@@ -511,10 +499,8 @@ function QuanLySanPham() {
                             idsImage: [...prevState.idsImage, ...mangId] // Kết hợp idsImage cũ và mangId
                         }));
 
-                        console.log('image update state update ', stateProductDetail);
 
                         if (mangId) {
-                            console.log('idddd ', stateProductDetail);
                             mutationUpdate.mutate({ id: rowSelected, token: user.access_token, ...stateProductDetail, idsImage: [...stateProductDetail.idsImage, ...mangId] }, {
                                 onSettled: () => {
                                     queryProduct.refetch()
@@ -618,8 +604,6 @@ function QuanLySanPham() {
         // Chờ tất cả các promise được giải quyết
         const previews = await Promise.all(base64Promises);
         setImageUpdate(previews)
-        console.log("image update 1", previews);
-        console.log("image update 2", imageUpdate);
 
 
 
@@ -837,7 +821,6 @@ function QuanLySanPham() {
 
 
     const onCloseDetail = () => {
-        console.log('cloooo');
         setIsOpenDrawer(false)
         setStateProductdetail({
             name: '',
@@ -847,7 +830,8 @@ function QuanLySanPham() {
             idProductCategory: '',
             idsImage: '',
             discount: '',
-            donvi: ''
+            donvi: '',
+            exp: ''
 
         })
         form1.resetFields()
@@ -942,7 +926,7 @@ function QuanLySanPham() {
                     isLoading={isLoadingProduct}
                     columns={columns}
                     dataa={product.data.map((item) => {
-                        return { ...item, key: item._id }
+                        return { ...item, key: item._id, type: item.idProductCategory }
                     })
                     }
                     onRow={(record, rowIndex) => {
@@ -1009,7 +993,19 @@ function QuanLySanPham() {
                         <Input value={stateProduct.donvi} onChange={handleOnChange} name="donvi" />
 
                     </Form.Item>
+                    <Form.Item
+                        label="Hạn sử dụng"
+                        name="exp"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Vui lòng nhập hạn sử dụng!',
+                            },
+                        ]}
+                    >
+                        <Input value={stateProduct.exp} onChange={handleOnChange} name="exp" />
 
+                    </Form.Item>
 
                     <Form.Item
                         label="Giá sản phẩm"
@@ -1173,7 +1169,19 @@ function QuanLySanPham() {
                             <Input value={stateProductDetail.donvi} onChange={handleOnChangeDetail} name="donvi" />
 
                         </Form.Item>
+                        <Form.Item
+                            label="Hạn sử dụng"
+                            name="exp"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập hạn sử dụng!',
+                                },
+                            ]}
+                        >
+                            <Input value={stateProductDetail.exp} onChange={handleOnChangeDetail} name="exp" />
 
+                        </Form.Item>
                         <Form.Item
                             label="Giá sản phẩm"
                             name="price"
@@ -1232,7 +1240,7 @@ function QuanLySanPham() {
                                 },
                             ]}
                         >
-                            <Select placeholder="Select province" name="idProductCategory" value={stateProductDetail.idProductCategory} onChange={(value) => handleOnChangeCatoDetail(value)}>
+                            <Select placeholder="Chọn loại sản phẩm" name="idProductCategory" value={stateProductDetail.idProductCategory} onChange={(value) => handleOnChangeCatoDetail(value)}>
                                 {
                                     productsCatogory && productsCatogory.data && productsCatogory.data.map((item) => (
                                         <Option

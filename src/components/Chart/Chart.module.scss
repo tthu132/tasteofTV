@@ -1,0 +1,35 @@
+.table {
+    // background-color: red;
+
+    table {
+        border-collapse: collapse;
+        /* Loại bỏ đường kẻ giữa các ô */
+        width: auto;
+        /* Tự động điều chỉnh chiều rộng bảng */
+    }
+
+    th,
+    td {
+        border: none;
+        /* Loại bỏ đường viền cho các ô */
+        padding: 10px;
+        /* Tạo khoảng cách 10px cho tất cả các ô */
+    }
+
+    th {
+        text-align: left;
+        /* Canh trái nội dung tiêu đề */
+    }
+
+    td:nth-child(2) {
+        /* Nhắm mục tiêu vào cột thứ 2 */
+        text-align: right;
+        /* Canh phải nội dung dữ liệu */
+    }
+
+}
+
+.inner {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}

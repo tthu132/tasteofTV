@@ -1,17 +1,28 @@
 .wrapper {
     width: 100%;
-    height: 60px;
+    // height: 60px;
     display: flex;
     justify-content: center;
     background-color: #55833D;
 
-    // bottom: 0;
-
-
 }
 
 .inner {
+    padding-top: 30px;
+    padding-bottom: 30px;
     height: 100%;
     width: 1062px;
     background-color: #55833D;
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr;
+    color: white;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    li {
+        margin: 5px 0;
+        cursor: pointer;
+    }
 }

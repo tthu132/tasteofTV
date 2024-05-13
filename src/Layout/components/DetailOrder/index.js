@@ -18,20 +18,17 @@ function DetailOrder() {
     const { state } = location
     const { id } = params
     const user = useSelector((state) => state.user)
-    console.log('haaaaaaaa ', user);
 
 
     const [loading, setLoading] = useState(true); // Trạng thái loading
     const fetchDetailsOrder = async () => {
         const res = await OrderService.getDetailsOrder(id, state?.token ? state?.token : user.access_token)
-        console.log('state', res.data);
         setLoading(false);
         return res.data
     }
     const queryOrder = useQuery({ queryKey: ['orders-details'], queryFn: fetchDetailsOrder, })
     const { isPending, data } = queryOrder
 
-    console.log('state', data);
     const priceMemo = useMemo(() => {
         const result = data?.orderItems?.reduce((total, cur) => {
             return total + ((cur.price * cur.amount))
@@ -52,7 +49,6 @@ function DetailOrder() {
         }, 0);
     }, [data])
 
-    console.log('discount ', priceDiscountMemo);
     return (
         <Loading isLoading={isPending || loading}  >
             <div className={cx('wrapper')}>

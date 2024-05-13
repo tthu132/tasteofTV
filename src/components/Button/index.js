@@ -17,7 +17,7 @@ function Button({ to,
     disabled,
     rounded,
     buttonProfile,
-    buttonLogout, buttonLoginFrom, btnEye, upDate, Plus ,bntOrder}) {
+    buttonLogout, buttonLoginFrom, btnEye, upDate, Plus ,bntOrder,Sale,btnBuy}) {
 
     let Comp = 'button'
     const classes = cx('wrapper', {
@@ -34,7 +34,7 @@ function Button({ to,
         btnQuality,
         btnControl,
         buttonLoginFrom,
-        btnEye, upDate,bntOrder
+        btnEye, upDate,bntOrder,Sale,btnBuy
     })
 
     const props = {

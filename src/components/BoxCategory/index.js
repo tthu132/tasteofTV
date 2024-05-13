@@ -7,15 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 function BoxCategory({ item, children, onLoadMore, isLoading, check }) {
-    console.log('checkvv ', item._id);
-    console.log('checkvv ', item.name);
 
     const navigate = useNavigate()
 
 
     return (
         <Loading isLoading={isLoading}>
-            <h1>{item._id}</h1>
+
             <div className={cx('wrapper')}>
                 <Button btnCategory onClick={() => navigate(`/type/${item._id}`)}>{item.name}</Button>
 

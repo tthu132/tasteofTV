@@ -7,8 +7,6 @@ import axios from "axios";
 // // }
 // http://localhost:3001/api/order/get-order-details/639724669c6dda4fa11edcde
 export const createOrder = async (data, access_token) => {
-    console.log('body data ', data);
-    console.log('body acc ', access_token);
 
 
     const res = await axiosJWT.post(`${process.env.REACT_APP_API_KEY}/order/create/${data.user}`, data, {
@@ -20,7 +18,6 @@ export const createOrder = async (data, access_token) => {
 }
 
 export const getOrderByUserId = async (id, access_token) => {
-    console.log('tokuuu ', access_token);
     const res = await axiosJWT.get(`${process.env.REACT_APP_API_KEY}/order/get-all-order/${id}`, {
         headers: {
             token: `Bearer ${access_token}`,
@@ -49,7 +46,6 @@ export const cancelOrder = async (id, access_token, orderItems, userId) => {
 }
 
 export const getAllOrder = async (access_token) => {
-    console.log('accesssss ', access_token);
     const res = await axiosJWT.get(`${process.env.REACT_APP_API_KEY}/order/get-all-order`, {
         headers: {
             token: `Bearer ${access_token}`,
@@ -58,12 +54,10 @@ export const getAllOrder = async (access_token) => {
     return res.data
 }
 export const getOrdersByUserAndStatus = async (userId, status) => {
-    console.log('location 3 ', userId, status);
     const res = await axios.get(`${process.env.REACT_APP_API_KEY}/order/get-order/${userId}?status=${encodeURIComponent(status)}`)
     return res.data
 }
 export const updateOrder = async (id, data) => {
-    console.log('location 3 ', id, data);
     const res = await axios.put(`${process.env.REACT_APP_API_KEY}/order/update/${id}`, data)
     return res.data
 }

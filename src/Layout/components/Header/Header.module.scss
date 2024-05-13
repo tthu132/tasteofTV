@@ -8,7 +8,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #ffffff;
+    background-color: rgb(240, 239, 239);
     /* Màu nền của header */
     z-index: 1000;
 
@@ -123,7 +123,7 @@
     button {
         border: none;
         padding: 10px;
-        background-color: white;
+        background-color: transparent;
     }
 
     .icon {
@@ -132,7 +132,8 @@
     }
 
     p {
-        font-size: 14px;
+        font-size: 15px;
+        font-weight: 400;
     }
 
     .icon-login {
@@ -216,4 +217,14 @@
 
 .transitionDiv.visible {
     opacity: 1;
+}
+
+
+
+
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {
+    .inner {
+        width: 100%
+    }
+
 }

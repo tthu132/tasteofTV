@@ -2,3 +2,29 @@
     width: var(--default-layout-wight);
 
 }
+
+.box-sale {
+    padding: 10px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 8px;
+    margin-top: 20px;
+
+    .title {
+        display: flex;
+        flex-direction: row;
+        padding: 5px 0;
+
+        h4 {
+            color: rgb(255, 66, 78);
+        }
+    }
+}
+
+@media only screen and (min-width: 46.25em) and (max-width: 70.9375em) {
+    .wrapper {}
+}
+
+/* Responsive cho điện thoại */
+@media only screen and (max-width: 46.25em) {
+    .wrapper {}
+}

@@ -1,0 +1,41 @@
+.active {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.active1 {
+    box-shadow: 0px 0px 50px #5925f0 !important;
+}
+
+.icon,
+.icon2 {
+    cursor: 'pointer';
+    border: 'none';
+    background-color: 'transparent';
+    padding: '20px';
+    border-radius: 999px;
+    width: 100px;
+    height: 100px;
+}
+
+.icon2 {
+    width: 100%;
+    text-align: center;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.icon.active1 {
+    animation: scaleAnimation 1s infinite;
+}

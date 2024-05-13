@@ -12,7 +12,34 @@
     white-space: nowrap;
     /* Không ngắt dòng cho chữ */
     text-overflow: ellipsis;
-    z-index: 10000;
-
+    z-index: 9999999999;
+    margin: 10px 0;
+    font-size: 20px;
     /* Hiển thị dấu chấm ba (...) cho phần chữ bị tràn ra */
+}
+
+p {
+    font-size: 16px;
+
+}
+
+.image {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.sale {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.wrapper {
+    padding: 5px;
+}
+.old-price {
+    text-decoration: line-through;
+
 }
